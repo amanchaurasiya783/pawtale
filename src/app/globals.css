@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* PRIMARY COLORS */
+  --primary-mint-green: #a8e6cf;
+  --primary-coral: #ff8c94;
+
+  /* SECONDARY COLORS */
+  --secondary-yellow: #ffd166;
+  --secondary-sky-blue: #69c8ec;
+
+  /* ACCENT COLOR */
+  --accent-blue: #00296b;
+  --accent-sky-blue: #d2e2fd;
+  --accent-grey: #4a4a4a;
+  --accent-white: #f9f4f4;
+  --accent-brown: #342d2a;
+  --accent-off-orange: #fcf9f4;
+  --accent-orange: #f69946;
+
+  /*  // #003f88 // #00509d // #fdc500 // #ffd500 */
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {}
+} */
+
+* {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+}
+
+body {
+  color: var(--accent-grey);
+  background: var(--accent-white);
+}
+
+#scroll-container {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+#scroll-container::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
+}
+
+#test {
+  border: 1px solid red;
+}

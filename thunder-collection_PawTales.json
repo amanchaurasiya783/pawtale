@@ -1,0 +1,310 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "PawTales",
+    "collectionId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+    "dateExported": "2025-05-18T13:43:25.682Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "4e1e7396-cea9-473a-b1c8-4134ce472d10",
+            "name": "Products",
+            "containerId": "",
+            "created": "2025-05-18T13:38:20.152Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "c5a0389c-199e-4b1f-a577-3790d531cc1a",
+            "name": "Blogs",
+            "containerId": "",
+            "created": "2025-05-18T13:37:41.070Z",
+            "sortNum": 70000
+        },
+        {
+            "_id": "8b91622f-74fa-4222-9f53-a5ed8beccd3f",
+            "name": "Users",
+            "containerId": "",
+            "created": "2025-05-18T13:37:21.032Z",
+            "sortNum": 80000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "b3d0efed-9e9f-4f02-bcd9-58f610508e8e",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "8b91622f-74fa-4222-9f53-a5ed8beccd3f",
+            "name": "SignUP",
+            "url": "http://localhost:3000/api/users",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-11-24T16:39:06.205Z",
+            "modified": "2024-11-24T16:39:06.205Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"action\": \"signup\",\n  \"firstName\": \"Alok\",\n  \"lastName\": \"kumar\",\n  \"email\": \"alok@example.com\",\n  \"phone\": \"1234567899\",\n  \"password\": \"password123\"\n}\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "f50dbc20-a836-443f-996e-26ec1cb59403",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "c5a0389c-199e-4b1f-a577-3790d531cc1a",
+            "name": "ADD",
+            "url": "http://localhost:3000/api/blogs",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2025-05-18T13:37:44.306Z",
+            "modified": "2025-05-18T13:37:44.306Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n  \"title\": \"How And When To Switch From Puppy To Adult Dog Food\",\r\n  \"subtitle\": \"Consider The Dog’s Age And Breed Size\",\r\n  \"content1\": \"A dog’s lifespan can be categorized into three age groups: puppyhood, adulthood, and senior years. As it ages, your dog’s dietary requirements transition to accommodate its changing needs. Also, their appetite may transform as they mature. This is why it’s essential to know the best time to switch brands and types of kibbles that’d suit your dog’s health and eating habits. Food for puppies is designed to be packed with calories and essential nutrients for building bones and muscles and strengthening their bodily systems. Meanwhile, many adult dogs require calories, nutrients, and protein in specific amounts to maintain their strength while staying at a healthy weight. Because of the difference in the dietary requirements, dogs must be given the type of nourishment appropriate for their age.\",\r\n  \"content2\": \"Dogs around six to 12 months of age commonly display readiness for transitioning to adult dog food. Some of these signs include leftover portions of food after each feeding session or skipped meals, which signifies that the dog may have already felt full with less puppy food since it’s calorie-dense.\",\r\n  \"category\": [\"Dog\", \"Puppy\", \"Care\", \"Pet\"],\r\n  \"tags\": [\"Dog Care\", \"Dog Food\", \"Dog Health\", \"Dog Insurance\", \"Dog Lifestyle\", \"Dog Products\"],\r\n  \"images\": [\r\n    \"https://www.rd.com/wp-content/uploads/2021/06/GettyImages-1205998407-e1624731290663.jpg\",\r\n    \"https://hips.hearstapps.com/hmg-prod/images/small-dog-breeds-alaskan-klee-kai-1627447880.jpg?crop=0.534xw:1.00xh;0.461xw,0&resize=980\"\r\n  ],\r\n  \"createdBy\": \"67432fe02cdffaaf387919fc\"\r\n}\r\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "864aa73f-6f2a-4466-9040-4d35fbead3da",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "4e1e7396-cea9-473a-b1c8-4134ce472d10",
+            "name": "ADD",
+            "url": "http://localhost:3000/api/products",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2025-05-18T13:38:22.768Z",
+            "modified": "2025-05-18T13:38:22.768Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\" : \"Dog Toy\",\n  \"description\": \"Dogs love playing with this toy\",\n  \"skuID\": \"SAKHD213UDY\",\n  \"price\": 300,\n  \"mrp\": 700,\n  \"discount\": \"60%\",\n  \"images\": [\"https://rukminim2.flixcart.com/image/850/1000/kgjqefk0/pet-toy/n/d/8/pa-ty-226-e-pet-needs-original-imafwrmfhme9chhf.jpeg?q=90&crop=false\", \"https://rukminim2.flixcart.com/image/850/1000/xif0q/pet-toy/r/u/h/6-yhd399-youhavedeal-original-imahyz3qhy2xhpt9.jpeg?q=90&crop=false\", \"https://images.meesho.com/images/products/324927114/eepgz_512.webp\"],\n  \"category\": [\"dog\", \"plastic toys\"],\n  \"quantity\": \"2\",\n  \"createdBy\": \"67432fe02cdffaaf387919fc\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "dc145325-6da1-49d7-8cdf-395b78f86a4c",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "8b91622f-74fa-4222-9f53-a5ed8beccd3f",
+            "name": "LogIN",
+            "url": "http://localhost:3000/api/users",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-11-24T16:40:23.948Z",
+            "modified": "2024-11-24T16:42:47.630Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"action\": \"login\",\n  \"email\": \"alok@example.com\",\n  \"password\": \"password123\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "d4429f3a-1a17-421c-b90d-744b88340678",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "c5a0389c-199e-4b1f-a577-3790d531cc1a",
+            "name": "GET ALL",
+            "url": "http://localhost:3000/api/blogs",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2025-05-18T13:37:48.936Z",
+            "modified": "2025-05-18T13:37:48.936Z",
+            "headers": []
+        },
+        {
+            "_id": "d5e5c721-31fb-48bb-b83f-3a8fdf226470",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "4e1e7396-cea9-473a-b1c8-4134ce472d10",
+            "name": "UPDATE",
+            "url": "http://localhost:3000/api/products/6745f28088200d0305787a2f",
+            "method": "PUT",
+            "sortNum": 20000,
+            "created": "2025-05-18T13:38:26.389Z",
+            "modified": "2025-05-18T13:38:26.389Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\" : \"Dog Toy\",\n  \"description\": \"Dogs love playing with this toy\",\n  \"skuID\": \"SAKHD213UDY\",\n  \"price\": 300,\n  \"mrp\": 700,\n  \"discount\": \"60%\",\n  \"images\": [\"https://rukminim2.flixcart.com/image/850/1000/kgjqefk0/pet-toy/n/d/8/pa-ty-226-e-pet-needs-original-imafwrmfhme9chhf.jpeg?q=90&crop=false\", \"https://rukminim2.flixcart.com/image/850/1000/xif0q/pet-toy/r/u/h/6-yhd399-youhavedeal-original-imahyz3qhy2xhpt9.jpeg?q=90&crop=false\", \"https://images.meesho.com/images/products/324927114/eepgz_512.webp\"],\n  \"category\": [\"dog\", \"plastic toys\"],\n  \"quantity\": 2,\n  \"createdBy\": \"67432fe02cdffaaf387919fc\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "b6ca23b5-ea5a-45b9-90c7-2cb0b4bab36c",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "8b91622f-74fa-4222-9f53-a5ed8beccd3f",
+            "name": "LogOut",
+            "url": "http://localhost:3000/api/users",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-11-30T19:21:39.666Z",
+            "modified": "2024-11-30T19:25:01.737Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"action\": \"logout\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "eb20ac36-ef4e-4ad5-ba9d-b2d3b989eca8",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "c5a0389c-199e-4b1f-a577-3790d531cc1a",
+            "name": "GET ONE",
+            "url": "http://localhost:3000/api/blogs/6743717fe26b1b01d7e9b3cc",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2025-05-18T13:37:51.449Z",
+            "modified": "2025-05-18T13:37:51.449Z",
+            "headers": []
+        },
+        {
+            "_id": "b42f9999-db6d-44b8-b229-0af4f8dc5b58",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "4e1e7396-cea9-473a-b1c8-4134ce472d10",
+            "name": "LIKE",
+            "url": "http://localhost:3000/api/products/6745f28088200d0305787a2f",
+            "method": "PATCH",
+            "sortNum": 30000,
+            "created": "2025-05-18T13:38:28.553Z",
+            "modified": "2025-05-18T13:38:28.553Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n  \"type\": \"comment\",\r\n  \"userID\": \"67432fe02cdffaaf387919fc\", // Replace with a valid user ID\r\n  \"comment\": \"This is a great product!\"\r\n}\r\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "e67b1aa4-f31e-468c-929f-7cd53b4d24f4",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "c5a0389c-199e-4b1f-a577-3790d531cc1a",
+            "name": "UPDATE",
+            "url": "http://localhost:3000/api/blogs/6743717fe26b1b01d7e9b3cc",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2025-05-18T13:37:57.892Z",
+            "modified": "2025-05-18T13:37:57.892Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"How And When To Switch From Puppy To Adult Dog Food\",\n    \"subtitle\": \"Consider The Dog’s Age And Breed Size\",\n    \"content1\": \"A dog’s lifespan can be categorized into three age groups: puppyhood, adulthood, and senior years. As it ages, your dog’s dietary requirements transition to accommodate its changing needs. Also, their appetite may transform as they mature. This is why it’s essential to know the best time to switch brands and types of kibbles that’d suit your dog’s health and eating habits. Food for puppies is designed to be packed with calories and essential nutrients for building bones and muscles and strengthening their bodily systems. Meanwhile, many adult dogs require calories, nutrients, and protein in specific amounts to maintain their strength while staying at a healthy weight. Because of the difference in the dietary requirements, dogs must be given the type of nourishment appropriate for their age.\",\n    \"content2\": \"Dogs around six to 12 months of age commonly display readiness for transitioning to adult dog food. Some of these signs include leftover portions of food after each feeding session or skipped meals, which signifies that the dog may have already felt full with less puppy food since it’s calorie-dense.\",\n    \"category\": [\n      \"Dog\",\n      \"Puppy\",\n      \"Care\",\n      \"Pet\"\n    ],\n    \"tags\": [\n      \"Dog Care\",\n      \"Dog Food\",\n      \"Dog Health\",\n      \"Dog Insurance\",\n      \"Dog Lifestyle\",\n      \"Dog Products\"\n    ],\n    \"images\": [\n      \"https://www.rd.com/wp-content/uploads/2021/06/GettyImages-1205998407-e1624731290663.jpg\",\n      \"https://hips.hearstapps.com/hmg-prod/images/small-dog-breeds-alaskan-klee-kai-1627447880.jpg?crop=0.534xw:1.00xh;0.461xw,0&resize=980\"\n    ],\n    \"views\": 0,\n    \"likes\": 0,\n  \"isDeleted\": false,\n    \"createdAt\": \"2024-11-24T18:33:35.520Z\",\n    \"comments\": [],\n    \"__v\": 0\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "59b45505-1f39-43d1-baf3-61de393abddf",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "4e1e7396-cea9-473a-b1c8-4134ce472d10",
+            "name": "DELETE",
+            "url": "http://localhost:3000/api/products/6745f28088200d0305787a2f",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2025-05-18T13:38:30.315Z",
+            "modified": "2025-05-18T13:38:30.315Z",
+            "headers": []
+        },
+        {
+            "_id": "ec312a89-a791-4846-a5b0-4b6921a4f060",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "c5a0389c-199e-4b1f-a577-3790d531cc1a",
+            "name": "LIKE",
+            "url": "http://localhost:3000/api/blogs/6743717fe26b1b01d7e9b3cc",
+            "method": "PATCH",
+            "sortNum": 50000,
+            "created": "2025-05-18T13:37:59.689Z",
+            "modified": "2025-05-18T13:37:59.689Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"isDeleted\": false\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "86ea3d67-31f9-4167-b7c7-5270d0069204",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "4e1e7396-cea9-473a-b1c8-4134ce472d10",
+            "name": "GET BY ID",
+            "url": "http://localhost:3000/api/products/6745f28088200d0305787a2f",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2025-05-18T13:38:31.913Z",
+            "modified": "2025-05-18T13:38:31.913Z",
+            "headers": []
+        },
+        {
+            "_id": "1370dabc-cb7f-4b34-8111-db726d655789",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "c5a0389c-199e-4b1f-a577-3790d531cc1a",
+            "name": "DELETE",
+            "url": "http://localhost:3000/api/blogs/6743717fe26b1b01d7e9b3cc?deleteType=SOFT",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2025-05-18T13:38:03.976Z",
+            "modified": "2025-05-18T13:38:03.976Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "deleteType",
+                    "value": "SOFT",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "51a58484-7c81-4561-80d9-97080b5b7f92",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "4e1e7396-cea9-473a-b1c8-4134ce472d10",
+            "name": "GET ALL",
+            "url": "http://localhost:3000/api/products",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2025-05-18T13:38:33.607Z",
+            "modified": "2025-05-18T13:38:33.607Z",
+            "headers": []
+        },
+        {
+            "_id": "590f7541-588b-4202-9c24-ede29de0843d",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "c5a0389c-199e-4b1f-a577-3790d531cc1a",
+            "name": "queryIds",
+            "url": "http://localhost:3000/api/blogs?ids=674374ce2a5b46716046bafe",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2025-05-18T13:38:06.027Z",
+            "modified": "2025-05-18T13:38:06.027Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "ids",
+                    "value": "674374ce2a5b46716046bafe",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "d158dc57-38a7-4c37-b245-9fdd2c26f12e",
+            "colId": "1db68f8c-abad-4a0b-a75b-2dd6dfba78e5",
+            "containerId": "4e1e7396-cea9-473a-b1c8-4134ce472d10",
+            "name": "TransactionPost",
+            "url": "http://localhost:3000/api/transactions",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2025-05-18T13:38:35.637Z",
+            "modified": "2025-05-18T13:38:35.637Z",
+            "headers": [
+                {
+                    "name": "x-user-id",
+                    "value": "674865d9f83c5100ca7ebeee"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"cardDetails\": {\n    \"cardHolder\":\"\",\n    \"cardNumber\":\"\",\n    \"cvv\":\"\",\n    \"expiryDate\":\"\"\n  },\n  \"paymentMethod\": \"cod\",\n  \"shippingAddress\": {\n    \"address\":\"NA\",\n    \"city\":\"Ghaziabad\",\n    \"contact\":\"2345678909\",\n    \"email\":\"shivam@gmail.com\",\n    \"landmark\":\"sada\",\n    \"name\":\"Dog Food\",\n    \"pincode\":\"201009\",\n    \"state\":\"Uttar Pradesh\"\n  }\n}",
+                "form": []
+            }
+        }
+    ],
+    "ref": "PYbD3xke4Fk6dNNhb0fqUVKLePHg8PNFvC4_tOPZF_Xx952GiYbNIG8RGTCzaboktAOVHtdHAKNtlro4cQIREw"
+}
