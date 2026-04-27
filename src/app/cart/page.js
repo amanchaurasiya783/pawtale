@@ -5,8 +5,8 @@ import { FaTrash, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { verifyToken } from "../utils/authenticate";
 import Link from "next/link";
 import Image from "next/image";
-import OrderPage from "../_components/orders/page";
-import PaymentOptions from "../_components/paymentoptions/page";
+import OrderPage from "../_components/orders";
+import PaymentOptions from "../_components/paymentoptions";
 import Skeleton from "react-loading-skeleton";
 import Script from "next/script";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -115,7 +115,7 @@ export default function Cart() {
   const onPaymentSubmit = async () => {
     try {
       // 1️⃣ Create order on backend
-      const res = await fetch("/api/razorpay/order", {
+      const res = await fetch(`/api/razorpay/order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -136,7 +136,7 @@ export default function Cart() {
         description: "Order Payment",
         handler: async function (response) {
           // 3️⃣ Verify payment on backend
-          const verifyRes = await fetch("/api/razorpay/verify", {
+          const verifyRes = await fetch(`/api/razorpay/verify`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(response),
@@ -178,12 +178,12 @@ export default function Cart() {
             <p className="text-center text-black">Your cart is empty.</p>
           ) : (
             cartItems.map((item) => (
-              <div key={item._id} className="border-b pb-3 mb-3">
+              <div key={item?._id} className="border-b pb-3 mb-3">
                 <div className="flex flex-col md:flex-row gap-4 items-center">
-                  <Link key={item._id} href={`/store/${item._id}`}>
+                  <Link key={item?._id} href={`/store/${item?._id}`}>
                     <div className="w-20 h-20 bg-gray-200 rounded overflow-auto">
                       <Image
-                        src={item.products.images[0]}
+                        src={item?.products?.images?.[0]}
                         alt="Product Image"
                         width={100}
                         height={100}
@@ -193,10 +193,10 @@ export default function Cart() {
                   </Link>
                   <div className="flex-grow">
                     <h3 className="text-sm font-medium text-gray-900">
-                      {item.products.name}
+                      {item?.products?.name}
                     </h3>
                     <p className="text-lg font-medium text-gray-800">
-                      ₹{item.products.price}
+                      ₹{item?.products?.price}
                     </p>
                   </div>
                 </div>
@@ -204,14 +204,14 @@ export default function Cart() {
                 <div className="flex flex-col md:flex-row items-center justify-between mt-3 text-sm text-gray-600">
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => updateQuantity(item._id, -1)}
+                      onClick={() => updateQuantity(item?._id, -1)}
                       className="px-2 py-1 bg-gray-200 rounded"
                     >
                       -
                     </button>
-                    <span className="font-semibold">{item.quantity}</span>
+                    <span className="font-semibold">{item?.quantity}</span>
                     <button
-                      onClick={() => updateQuantity(item._id, 1)}
+                      onClick={() => updateQuantity(item?._id, 1)}
                       className="px-2 py-1 bg-gray-200 rounded"
                     >
                       +
@@ -220,14 +220,14 @@ export default function Cart() {
                   <div className="flex gap-4">
                     <button
                       onClick={() =>
-                        handleAddToWishlist(item.products._id, item._id)
+                        handleAddToWishlist(item?.products?._id, item?._id)
                       }
                       className="text-gray-600 flex items-center gap-1"
                     >
                       <FaHeart className="text-red-500" /> Save for later
                     </button>
                     <button
-                      onClick={() => removeItem(item._id)}
+                      onClick={() => removeItem(item?._id)}
                       className="text-gray-600 flex items-center gap-1"
                     >
                       <FaTrash className="text-red-500" /> Remove

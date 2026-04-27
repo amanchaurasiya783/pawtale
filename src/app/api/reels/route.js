@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 
 const apiKey = process.env.YOUTUBE_API_KEY;
@@ -11,15 +12,19 @@ export async function GET(req, { params }) {
     const searchString =
       new URL(req.url).searchParams.get("searchString") || "petcaring";
     const response = await fetch(
-      `${baseURL}?part=snippet&key=${apiKey}&q=${searchString}&maxResults=${reelsResult}&type=video&videoDuration=${reelsVideoDuration}`
+      `${baseURL}?part=snippet&key=${apiKey}&q=${searchString}&maxResults=${reelsResult}&type=video&videoDuration=${reelsVideoDuration}`,
+      { cache: "no-store" },
     );
+    if (!response.ok) {
+      throw new Error("YouTube API failed");
+    }
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
     console.log("error : ", error);
     return NextResponse.json(
       { message: `Fetching Shorts Failed: ${error.message}` },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

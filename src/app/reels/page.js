@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
-import Button from "../_common/button/page";
+// import Button from "../_common/button/page";
+import Button from "@/app/_components/button.tsx";
 
 const reelsData = [
   {

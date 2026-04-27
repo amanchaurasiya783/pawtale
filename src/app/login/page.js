@@ -3,8 +3,8 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import SignUp from "../_components/signup/page";
-import LogIn from "../_components/login/page";
+import SignUp from "../_components/signup";
+import LogIn from "../_components/login";
 import Cookies from "js-cookie";
 
 const LogInPage = () => {

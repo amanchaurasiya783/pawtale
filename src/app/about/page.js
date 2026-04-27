@@ -1,5 +1,5 @@
 "use client";
-import HeroSection from "../_components/herosection/page";
+import HeroSection from "../_components/herosection";
 import { motion } from "framer-motion";
 import Image from "next/image";
 

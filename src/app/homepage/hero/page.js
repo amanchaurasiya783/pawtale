@@ -1,4 +1,5 @@
-import Button from "../../_common/button/page";
+// import Button from "../../_common/button/page";
+import Button from "@/app/_components/button.tsx";
 import Image from "next/image";
 const cat2 = "/Assets/cat2.png";
 

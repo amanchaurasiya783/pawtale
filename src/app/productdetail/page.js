@@ -1,7 +1,7 @@
-import ProductCard from "../_components/productcard/page";
-import AddToCartButton from "../_components/addtocartbutton/page";
-import StarIcon from "../_components/staricon/layout";
-import ProductImages from "../producthero/productimages/page";
+import ProductCard from "../_components/productcard";
+import AddToCartButton from "../_components/addtocartbutton";
+import StarIcon from "../_components/staricon";
+import ProductImages from "@/app/_components/productimages";
 
 function ProductDetail({ product }) {
   // Mock product data
@@ -51,18 +51,18 @@ function ProductDetail({ product }) {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Image Gallery Section */}
         <div className="md:w-2/5">
-          <ProductImages images={product.images} product={product} />
+          <ProductImages images={product?.images} product={product} />
         </div>
 
         {/* Product Details Section */}
         <div className="md:w-3/5">
           <h1 className="text-2xl text-background font-semibold text-gray-800">
-            {product.name || "Product Name"}
+            {product?.name || "Product Name"}
           </h1>
 
           <div className="mt-2 flex items-center gap-2">
             <span className="bg-blue-600 text-white px-2 py-1 text-xs rounded-sm">
-              {product.ratings.length} ★
+              {product?.ratings?.length} ★
             </span>
             <span className="text-sm text-gray-600">
               {productw.reviews.toLocaleString()} Ratings & Reviews
@@ -72,20 +72,20 @@ function ProductDetail({ product }) {
           <div className="mt-4">
             <div className="flex items-baseline gap-2">
               <span className="text-3xl text-background font-semibold">
-                ₹{product.price.toLocaleString()}
+                ₹{product?.price?.toLocaleString()}
               </span>
               <span className="text-lg text-gray-500 line-through">
-                ₹{product.mrp.toLocaleString()}
+                ₹{product?.mrp?.toLocaleString()}
               </span>
               <span className="text-green-600 font-medium">
-                {product.discount} off
+                {product?.discount} off
               </span>
             </div>
             <p className="text-sm text-green-600 mt-1">
               inclusive of all taxes
             </p>
             <p className="text-gray-700 mt-4">
-              {product.description || "Description not available"}
+              {product?.description || "Description not available"}
             </p>
           </div>
 
@@ -131,13 +131,13 @@ function ProductDetail({ product }) {
           Frequently Bought Together
         </h2>
         <div className="grid gap-3 m-2 p-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-          {product.relatedProducts?.length > 0
-            ? product.relatedProducts.map((relatedProduct) => (
+          {product?.relatedProducts?.length > 0
+            ? product?.relatedProducts.map((relatedProduct) => (
                 <ProductCard
-                  key={relatedProduct._id}
-                  imgPath={relatedProduct.images[0]}
-                  ProductName={relatedProduct.name}
-                  price={relatedProduct.price}
+                  key={relatedProduct?._id}
+                  imgPath={relatedProduct?.images?.[0]}
+                  ProductName={relatedProduct?.name}
+                  price={relatedProduct?.price}
                 />
               ))
             : "No related products available"}
@@ -147,20 +147,20 @@ function ProductDetail({ product }) {
         <h2 className="font-bold text-xl text-center border-b-2 border-gray-400 py-3">
           Reviews
         </h2>
-        {product.comments?.length > 0 ? (
+        {product?.comments?.length > 0 ? (
           <div className="flex flex-col gap-3">
-            {product.comments.map((comment) => (
+            {product?.comments.map((comment) => (
               <div
-                key={comment._id}
+                key={comment?._id}
                 className="border p-3 rounded-lg shadow-sm"
               >
-                <p className="font-medium">{comment.comment}</p>
+                <p className="font-medium">{comment?.comment}</p>
                 <p className="text-gray-500 text-sm">
-                  {new Date(comment.createdAt).toLocaleDateString()}
+                  {new Date(comment?.createdAt).toLocaleDateString()}
                 </p>
                 <div className="flex gap-3 text-sm text-gray-600 mt-1">
-                  <span>{comment.likes} Likes</span>
-                  <span>{comment.replies?.length || 0} Replies</span>
+                  <span>{comment?.likes} Likes</span>
+                  <span>{comment?.replies?.length || 0} Replies</span>
                 </div>
               </div>
             ))}

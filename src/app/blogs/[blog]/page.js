@@ -1,5 +1,5 @@
-import Comments from "@/app/_components/comments/page";
-import BookmarkIconComp from "@/app/_components/bookmarkicon/page";
+import Comments from "@/app/_components/comments.tsx";
+import BookmarkIconComp from "@/app/_components/bookmarkicon.tsx";
 import { SearchCircleIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import mongoose from "mongoose";

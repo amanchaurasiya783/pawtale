@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Button from "../../_common/button/page";
+// import Button from "../../_common/button/page";
+import Button from "@/app/_components/button.tsx";
 
 const AboutUs = () => {
   return (

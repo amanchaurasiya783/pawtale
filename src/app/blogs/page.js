@@ -1,20 +1,20 @@
 "use client";
 import Link from "next/link";
-import BlogCard from "../_components/blogcard/layout";
-import Sidebar from "../_components/sidebar/page";
+import BlogCard from "../_components/blogcard.tsx";
+import Sidebar from "../_components/sidebar";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setBlogs } from "../redux/blogSlice";
 import axios from "axios";
-import HeroSection from "../_components/herosection/page";
+import HeroSection from "../_components/herosection";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Blogs() {
   const [allBlogs, setAllBlogs] = useState([]);
   const dispatch = useDispatch();
-  const fetchedBlogs = useSelector((state) => state.blog.blogs);
-  const searchTerm = useSelector((state) => state.blog.searchTerm);
+  const fetchedBlogs = useSelector((state) => state.blog?.blogs);
+  const searchTerm = useSelector((state) => state.blog?.searchTerm);
   const isLoading = fetchedBlogs.length === 0;
 
   // Fetch Blogs
@@ -62,11 +62,11 @@ export default function Blogs() {
               ))
             : allBlogs.length > 0
               ? allBlogs.map((blog) => (
-                  <Link href={`/blogs/${blog._id}`} key={blog._id}>
+                  <Link href={`/blogs/${blog?._id}`} key={blog?._id}>
                     <BlogCard
-                      imgPath={blog.images[0]}
-                      title={blog.title}
-                      desc={blog.content1.slice(0, 90) + " ..."}
+                      imgPath={blog?.images?.[0]}
+                      title={blog?.title}
+                      desc={blog?.content1?.slice(0, 90) + " ..."}
                     />
                   </Link>
                 ))

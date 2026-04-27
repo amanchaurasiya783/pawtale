@@ -1,6 +1,8 @@
-import Button from "../../_common/button/page";
-import CategoryCard from "../../_components/categorycard/page";
-import ProductCard from "../../_components/productcard/page";
+export const dynamic = "force-dynamic";
+// import Button from "../../_common/button/page";
+import Button from "@/app/_components/button.tsx";
+import CategoryCard from "../../_components/categorycard.tsx";
+import ProductCard from "../../_components/productcard";
 
 const ShopByCategory = async () => {
   // Category Banners
@@ -16,13 +18,14 @@ const ShopByCategory = async () => {
   // Fetch random products from API
   const fetchRandomProducts = async () => {
     try {
-      const product = await fetch("http://localhost:3000/api/products", {
+      const product = await fetch(`/api/products`, {
+        cache: "no-store",
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const products = await product.json();
+      const products = await product?.json();
 
       return products.products;
     } catch (error) {
@@ -54,10 +57,10 @@ const ShopByCategory = async () => {
       <div className="mx-auto my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-3 md:gap-5 gap-y-5">
         {products?.map((product) => (
           <ProductCard
-            key={product._id}
-            id={product._id}
-            imgPath={product.images[0]}
-            ProductName={product.name}
+            key={product?._id}
+            id={product?._id}
+            imgPath={product?.images?.[0]}
+            ProductName={product?.name}
           />
         ))}
       </div>

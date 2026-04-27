@@ -31,7 +31,7 @@ export default function AddBlog() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/blogs", {
+      const response = await fetch(`/api/blogs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

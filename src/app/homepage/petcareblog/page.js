@@ -1,20 +1,23 @@
-import BlogCard from "../../_components/blogcard/layout";
-import Button from "../../_common/button/page";
+export const dynamic = "force-dynamic";
+import BlogCard from "../../_components/blogcard.tsx";
+// import Button from "../../_common/button/page";
+import Button from "@/app/_components/button.tsx";
 import Link from "next/link";
 
 const PetCareBlog = async () => {
   const fetchRandomBlogs = async () => {
     try {
       // fetch random products from API
-      const response = await fetch(
-        `${process.env.MAIN_URL}/api/blogs?limit=5`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const response = await fetch(`/api/blogs?limit=5`, {
+        cache: "no-store",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+      });
+      if (!response.ok) {
+        throw new Error("PetCare Blog API failed");
+      }
       const blogs = await response.json();
 
       return blogs.blogs;
@@ -36,12 +39,12 @@ const PetCareBlog = async () => {
       </div>
       <div className="my-5 mx-2 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center gap-3">
         {blogs?.map((blog) => (
-          <Link key={blog._id} href={`/blogs/${blog._id}`} passHref>
+          <Link key={blog?._id} href={`/blogs/${blog?._id}`} passHref>
             <BlogCard
-              key={blog._id}
-              imgPath={blog.images[0]}
-              title={blog.title}
-              desc={blog.content1.slice(0, 100)}
+              key={blog?._id}
+              imgPath={blog?.images?.[0]}
+              title={blog?.title}
+              desc={blog?.content1?.slice(0, 100)}
             />
           </Link>
         ))}

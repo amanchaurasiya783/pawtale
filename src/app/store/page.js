@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import ProductCard from "../_components/productcard/page";
-import FilterSection from "./filtersection/page";
+import ProductCard from "../_components/productcard";
+import FilterSection from "@/app/_components/filtersection";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { setProducts } from "../redux/productSlice";
-import HeroSection from "../_components/herosection/page";
+import HeroSection from "../_components/herosection";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+export const dynamic = "force-dynamic";
 
 const Store = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -16,12 +17,12 @@ const Store = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const searchTerm = useSelector((state) => state.blog.searchTerm);
-  const products = useSelector((state) => state.product.products);
+  const products = useSelector((state) => state.product?.products);
 
   // Fetch all products
   const fetchProducts = async () => {
     try {
-      const response = await fetch("/api/products");
+      const response = await fetch(`/api/products`);
       if (!response.ok) throw new Error("Failed to fetch products.");
       const result = await response.json();
       dispatch(setProducts(result.products)); // Save products to redux store
@@ -43,10 +44,10 @@ const Store = () => {
     } else {
       const filteredProducts = products.filter(
         (product) =>
-          product.name
+          product?.name
             .toLowerCase()
             .includes(searchTerm.trim().toLowerCase()) ||
-          product.category.some((cat) =>
+          product?.category?.some((cat) =>
             cat.toLowerCase().includes(searchTerm.trim().toLowerCase()),
           ),
       );
@@ -57,12 +58,12 @@ const Store = () => {
   const handleFilter = ({ priceRange, selectedTags, selectedCategory }) => {
     const filtered = products.filter((product) => {
       const matchesPrice =
-        product.price >= priceRange[0] && product.price <= priceRange[1];
+        product?.price >= priceRange[0] && product?.price <= priceRange[1];
       const matchesTags = selectedTags.every((tag) =>
-        product.tags?.includes(tag),
+        product?.tags?.includes(tag),
       );
       const matchesCategory = selectedCategory
-        ? product.category === selectedCategory
+        ? product?.category === selectedCategory
         : true;
 
       return matchesPrice && matchesTags && matchesCategory;
@@ -127,11 +128,11 @@ const Store = () => {
                   .map((_, index) => <Skeleton key={index} height={250} />)
               ) : filteredProducts.length > 0 ? (
                 filteredProducts.map((item, index) => (
-                  <Link href={`/store/${item._id}`} key={index}>
+                  <Link href={`/store/${item?._id}`} key={index}>
                     <ProductCard
-                      id={item._id}
-                      imgPath={item.images[0]}
-                      ProductName={item.name}
+                      id={item?._id}
+                      imgPath={item?.images?.[0]}
+                      ProductName={item?.name}
                     />
                   </Link>
                 ))

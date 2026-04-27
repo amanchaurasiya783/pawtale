@@ -10,7 +10,7 @@ export default function Upload() {
     try {
       const data = new FormData();
       data.set("file", image);
-      const result = await fetch("/api/blogs/upload", {
+      const result = await fetch(`/api/blogs/upload`, {
         method: "POST",
         body: data,
       });

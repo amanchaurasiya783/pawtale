@@ -1,4 +1,4 @@
-import ReelsCard from "../../_components/reelscard/page";
+import ReelsCard from "../../_components/reelscard";
 
 const reelsData = [
   {

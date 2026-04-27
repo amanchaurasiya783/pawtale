@@ -1,4 +1,4 @@
-import ProductImages from "./productimages/page";
+import ProductImages from "@/app/_components/productimages";
 export default function ProductDetails() {
   // Mock product data
   const product = {
@@ -47,13 +47,13 @@ export default function ProductDetails() {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Image Gallery Section */}
         <div className="md:w-2/5">
-          <ProductImages images={product.images} />
+          <ProductImages images={product?.images} />
         </div>
 
         {/* Product Details Section */}
         <div className="md:w-3/5">
           <h1 className="text-2xl font-semibold text-gray-800">
-            {product.title}
+            {product?.title}
           </h1>
 
           <div className="mt-2 flex items-center gap-2">
@@ -61,17 +61,17 @@ export default function ProductDetails() {
               4.7 ★
             </span>
             <span className="text-sm text-gray-600">
-              {product.reviews.toLocaleString()} Ratings & Reviews
+              {product?.reviews?.toLocaleString()} Ratings & Reviews
             </span>
           </div>
 
           <div className="mt-4">
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-bold">
-                ₹{product.discountedPrice.toLocaleString()}
+                ₹{product?.discountedPrice?.toLocaleString()}
               </span>
               <span className="text-lg text-gray-500 line-through">
-                ₹{product.price.toLocaleString()}
+                ₹{product?.price?.toLocaleString()}
               </span>
               <span className="text-green-600 font-medium">13% off</span>
             </div>
@@ -84,7 +84,7 @@ export default function ProductDetails() {
           <div className="mt-6">
             <h2 className="text-lg font-medium text-gray-800">Highlights</h2>
             <ul className="mt-2 list-disc list-inside text-sm text-gray-700 space-y-1">
-              {product.highlights.map((item, index) => (
+              {product?.highlights?.map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
@@ -96,7 +96,7 @@ export default function ProductDetails() {
               Specifications
             </h2>
 
-            {Object.entries(product.specifications).map(([section, items]) => (
+            {Object.entries(product?.specifications).map(([section, items]) => (
               <div key={section} className="mb-4">
                 <h3 className="font-medium text-gray-700 capitalize">
                   {section}

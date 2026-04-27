@@ -47,16 +47,16 @@ export default function WishlistComponent() {
       if (!user?.id) throw new Error("Invalid user token.");
 
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const existingProduct = cart.find((product) => product.id === item._id);
+      const existingProduct = cart.find((product) => product?.id === item?._id);
 
       if (existingProduct) {
         existingProduct.quantity += 1;
       } else {
         cart.push({
-          id: item._id,
-          name: item.name,
-          image: item.images[0],
-          price: item.price,
+          id: item?._id,
+          name: item?.name,
+          image: item?.images?.[0],
+          price: item?.price,
           quantity: 1,
         });
       }
@@ -68,11 +68,11 @@ export default function WishlistComponent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           type: "addToCart",
-          product: { products: item._id, quantity: 1 },
+          product: { products: item?._id, quantity: 1 },
         }),
       });
 
-      await handleRemoveFromWishlist(item._id);
+      await handleRemoveFromWishlist(item?._id);
     } catch (error) {
       console.error("Error adding to cart:", error.message);
     }
@@ -158,22 +158,22 @@ export default function WishlistComponent() {
             </thead>
             <tbody>
               {wishlistItems.map((item) => (
-                <tr key={item._id} className="border-b">
+                <tr key={item?._id} className="border-b">
                   <td className="p-4 flex items-center gap-4">
                     <img
-                      src={item.images[0]}
-                      alt={item.name}
+                      src={item?.images?.[0]}
+                      alt={item?.name}
                       className="w-12 h-12 object-cover rounded"
                     />
-                    <span>{item.name}</span>
+                    <span>{item?.name}</span>
                   </td>
-                  <td className="p-4">${item.price.toFixed(2)}</td>
+                  <td className="p-4">${item?.price?.toFixed(2)}</td>
                   <td className="p-4">
-                    {new Date(item.updatedAt).toLocaleString()}
+                    {new Date(item?.updatedAt).toLocaleString()}
                   </td>
                   <td className="p-4">
                     <span className="text-green-600">✔</span>{" "}
-                    {item.quantity ? "Available" : "Out of Stock"}
+                    {item?.quantity ? "Available" : "Out of Stock"}
                   </td>
                   <td className="p-4 flex gap-4">
                     <ShoppingCartIcon
@@ -183,7 +183,7 @@ export default function WishlistComponent() {
                       className="cursor-pointer hover:opacity-80"
                     />
                     <button
-                      onClick={() => handleRemoveFromWishlist(item._id)}
+                      onClick={() => handleRemoveFromWishlist(item?._id)}
                       className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                     >
                       Remove
@@ -209,26 +209,26 @@ export default function WishlistComponent() {
           </p>
         ) : (
           wishlistItems.map((item) => (
-            <div key={item._id} className="bg-white p-4 rounded-lg shadow">
+            <div key={item?._id} className="bg-white p-4 rounded-lg shadow">
               <div className="flex items-start">
                 <div className="flex-grow">
                   <img
-                    src={item.images[0]}
-                    alt={item.name}
+                    src={item?.images?.[0]}
+                    alt={item?.name}
                     className="w-full h-24 object-cover rounded mb-2"
                   />
-                  <h3 className="text-sm font-medium">{item.name}</h3>
+                  <h3 className="text-sm font-medium">{item?.name}</h3>
                   <p className="text-sm text-gray-600">
-                    ${item.price.toFixed(2)}
+                    ${item?.price?.toFixed(2)}
                   </p>
                   <p className="text-sm text-gray-600">
-                    {new Date(item.updatedAt).toLocaleString()}
+                    {new Date(item?.updatedAt).toLocaleString()}
                   </p>
                   <p className="text-sm text-green-600">
-                    {item.quantity ? "Available" : "Out Of Stock"}
+                    {item?.quantity ? "Available" : "Out Of Stock"}
                   </p>
                   <button
-                    onClick={() => handleRemoveFromWishlist(item._id)}
+                    onClick={() => handleRemoveFromWishlist(item?.id)}
                     className="bg-red-500 text-white w-full py-2 rounded mt-3 hover:bg-red-600"
                   >
                     Remove

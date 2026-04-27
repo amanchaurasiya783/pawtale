@@ -1,28 +1,8 @@
 import connectToDatabase from "@/app/lib/mongodb";
 import { NextResponse } from "next/server";
 import Users from "@/app/lib/userModel";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const secret = process.env.JWT_SECRET;
-
-//JWT generate
-export function generateToken(user) {
-  if (!user) return;
-  return jwt.sign(
-    {
-      id: user._id,
-      email: user.email,
-      role: user.role,
-      username: user.firstName + " " + user.lastName,
-    },
-    secret,
-    { expiresIn: "7d" }
-  );
-}
+import { generateToken } from "@/lib/jwt";
 
 // Fetch All Users
 export async function GET(req, { params }) {}
@@ -39,7 +19,7 @@ export async function POST(req) {
     if (!action || !["signup", "login", "logout"].includes(action)) {
       return NextResponse.json(
         { error: "Invalid or missing action field" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -51,7 +31,7 @@ export async function POST(req) {
       if (existingUser) {
         return NextResponse.json(
           { error: "User already exist with this email" },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -72,7 +52,7 @@ export async function POST(req) {
 
       return NextResponse.json(
         { message: "User Created Successfully", user: newUser, token },
-        { status: 201 }
+        { status: 201 },
       );
     }
     // for login
@@ -81,7 +61,7 @@ export async function POST(req) {
       if (!user) {
         return NextResponse.json(
           { message: "User doesn't exist" },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
@@ -90,7 +70,7 @@ export async function POST(req) {
       if (!isPasswordCorrect) {
         return NextResponse.json(
           { message: "Invalid Email or Incorrect Password!" },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
@@ -108,7 +88,7 @@ export async function POST(req) {
           },
           token,
         },
-        { status: 200 }
+        { status: 200 },
       );
     } else if (action === "logout") {
       console.log("Logged Out Successfully");
@@ -122,7 +102,7 @@ export async function POST(req) {
     console.error("Error while handling Auth: ", error);
     return NextResponse.json(
       { message: "Failed in User Auth: ", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

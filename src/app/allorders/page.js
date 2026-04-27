@@ -44,17 +44,17 @@ export default function MyOrders() {
       <div className="space-y-6">
         {orders.map((order) => (
           <div
-            key={order.id}
+            key={order?.id}
             className="bg-white shadow-md p-4 rounded-lg border"
           >
             <div className="flex justify-between items-center border-b pb-3">
               <div>
-                <p className="text-sm text-gray-600">Order ID: {order.id}</p>
+                <p className="text-sm text-gray-600">Order ID: {order?.id}</p>
                 <p className="text-sm font-medium text-blue-500">
-                  {order.orderStatus}
+                  {order?.orderStatus}
                 </p>
                 <p className="text-sm text-gray-500">
-                  Expected Delivery: {order.expectedDelivery}
+                  Expected Delivery: {order?.expectedDelivery}
                 </p>
               </div>
               <button className="bg-blue-500 text-white px-4 py-1 rounded-md text-sm hover:bg-blue-600">
@@ -64,17 +64,17 @@ export default function MyOrders() {
             <div className="mt-4 space-y-3">
               {order.products.map((product) => (
                 <div
-                  key={product.id}
+                  key={product?.id}
                   className="flex items-center gap-4 border p-3 rounded-lg"
                 >
                   <img
-                    src={product.image}
-                    alt={product.name}
+                    src={product?.image}
+                    alt={product?.name}
                     className="w-16 h-16 object-cover rounded-md"
                   />
                   <div>
-                    <p className="font-medium">{product.name}</p>
-                    <p className="text-gray-600">{product.price}</p>
+                    <p className="font-medium">{product?.name}</p>
+                    <p className="text-gray-600">{product?.price}</p>
                   </div>
                 </div>
               ))}

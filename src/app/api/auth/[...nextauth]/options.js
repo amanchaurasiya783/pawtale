@@ -1,7 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
 import connectToDatabase from "@/app/lib/mongodb";
 import Users from "@/app/lib/userModel";
-import { generateToken } from "@/app/api/users/route";
+import { generateToken } from "@/lib/jwt";
 
 export const authOptions = {
   providers: [

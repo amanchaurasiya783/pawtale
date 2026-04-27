@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import BlogCard from "../_components/blogcard/layout";
-import Sidebar from "../_components/sidebar/page";
+import BlogCard from "../_components/blogcard.tsx";
+import Sidebar from "../_components/sidebar";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { verifyToken } from "../utils/authenticate";
@@ -61,11 +61,11 @@ export default function Blogs() {
         {!loading &&
           (savedBlogs?.length > 0 ? (
             savedBlogs.map((blog) => (
-              <Link href={`/blogs/${blog._id}`} key={blog._id}>
+              <Link href={`/blogs/${blog?._id}`} key={blog?._id}>
                 <BlogCard
-                  imgPath={blog.images[0]}
-                  title={blog.title}
-                  desc={blog.content1.slice(0, 100)}
+                  imgPath={blog?.images?.[0]}
+                  title={blog?.title}
+                  desc={blog?.content1?.slice(0, 100)}
                 />
               </Link>
             ))

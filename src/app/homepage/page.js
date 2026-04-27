@@ -4,6 +4,7 @@ import ReelsSection from "./reelssection/page";
 import AboutUs from "./aboutus/page";
 import Hero from "./hero/page";
 import "react-loading-skeleton/dist/skeleton.css";
+export const dynamic = "force-dynamic";
 
 const HomePage = () => {
   return (

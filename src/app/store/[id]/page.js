@@ -1,10 +1,15 @@
+export const dynamic = "force-dynamic";
 import ProductDetail from "@/app/productdetail/page";
 
 const fetchDetails = async (id) => {
-  const result = await fetch(`${process.env.MAIN_URL}/api/products/${id}`, {
+  const result = await fetch(`/api/products/${id}`, {
+    cache: "no-store",
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
+  if (!result.ok) {
+    throw new Error("store details API failed");
+  }
   const response = await result.json();
   return response.productDetails;
 };
