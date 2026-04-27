@@ -16,7 +16,8 @@ const BookmarkIconComp = ({ blogId, status }) => {
         try {
             if (!user || typeof user === "boolean") throw new Error("User not found");
             const response = await axios.get(
-                `${process.env.DEVELOPMENT_URL}/api/users/${user.id}`
+                // `${process.env.DEVELOPMENT_URL}/api/users/${user.id}`
+                `${process.env.PRODUCTION_URL}/api/users/${user.id}`
             );
             if (response.status !== 200)
                 throw new Error("Failed to fetch user details");
