@@ -34,6 +34,13 @@ function matchPath(pathname, routes) {
 // Force lowercase URLs
 function enforceLowercaseURL(req) {
   const { pathname } = req.nextUrl;
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    pathname.includes(".")
+  ) {
+    return null;
+  }
   if (pathname !== pathname.toLowerCase()) {
     const url = req.nextUrl.clone();
     url.pathname = pathname.toLowerCase();
