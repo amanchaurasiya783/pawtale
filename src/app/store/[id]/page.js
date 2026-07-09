@@ -2,7 +2,8 @@ export const dynamic = "force-dynamic";
 import ProductDetail from "@/app/productdetail/page";
 
 const fetchDetails = async (id) => {
-  const result = await fetch(`/api/products/${id}`, {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const result = await fetch(`${baseUrl}/api/products/${id}`, {
     cache: "no-store",
     method: "GET",
     headers: { "Content-Type": "application/json" },

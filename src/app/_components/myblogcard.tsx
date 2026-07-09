@@ -8,7 +8,10 @@ const MyBlogCard = ({ blogId, imgPath, title, desc }) => {
                 "Are you sure you want to delete this blog?"
             );
             if (!deleteConfirm) return;
-            const response = await fetch(`/api/blogs/${blogId}?deleteType=SOFT`, {
+
+            const baseUrl =
+                process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+            const response = await fetch(`${baseUrl}/api/blogs/${blogId}?deleteType=SOFT`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

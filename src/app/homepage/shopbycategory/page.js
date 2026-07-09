@@ -18,7 +18,9 @@ const ShopByCategory = async () => {
   // Fetch random products from API
   const fetchRandomProducts = async () => {
     try {
-      const product = await fetch(`/api/products`, {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+      const product = await fetch(`${baseUrl}/api/products`, {
         cache: "no-store",
         method: "GET",
         headers: {

@@ -8,7 +8,10 @@ const PetCareBlog = async () => {
   const fetchRandomBlogs = async () => {
     try {
       // fetch random products from API
-      const response = await fetch(`/api/blogs?limit=5`, {
+
+      const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+      const response = await fetch(`${baseUrl}/api/blogs?limit=5`, {
         cache: "no-store",
         method: "GET",
         headers: {
