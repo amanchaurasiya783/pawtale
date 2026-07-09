@@ -25,7 +25,7 @@ export default function AddComment({ setAllComment, blogId }) {
         <div className="w-full flex gap-3">
             <Image
                 className="rounded-full overflow-hidden w-16 aspect-square"
-                src={"/assets/hari_krishna.png"}
+                src={"/Assets/hari_krishna.png"}
                 width={100}
                 height={100}
                 alt="profile pic"
