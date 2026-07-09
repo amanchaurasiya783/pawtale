@@ -24,7 +24,7 @@ export default function Blogs() {
         const baseUrl =
           process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
         const response = await axios.get(
-          "${baseUrl}/api/blogs?page=1&limit=15",
+          `${baseUrl}/api/blogs?page=1&limit=15`,
         );
         const blogs = response.data.blogs;
         dispatch(setBlogs(blogs));
