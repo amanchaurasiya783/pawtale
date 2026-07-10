@@ -1,127 +1,178 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Paw-Tales
 
-## Getting Started
+Paw-Tales is a full-stack pet care platform built with Next.js, React, MongoDB, and Tailwind CSS. It combines a modern e-commerce experience with a content-rich blog experience for pet owners, making it easy to discover pet care tips, browse products, save favorites, and complete purchases securely.
 
-First, run the development server:
+The project is designed as a single Next.js application with server-side API routes, dynamic pages, user-facing interactions, and payment integration for a polished end-to-end experience.
+
+## Overview
+
+Paw-Tales brings together three main experiences:
+
+- Pet care content through blogs, categories, tags, and media-rich posts
+- A pet products shop with product listings, cart, wishlist, and checkout
+- User engagement features such as comments, likes, bookmarks, ratings, and profile-based activity
+
+This project was built to feel like a complete marketplace and community platform rather than a simple demo app.
+
+## Key Features
+
+### 1. Modern Home Experience
+
+- Hero section and landing page layout
+- Category-based browsing
+- Featured sections for blogs, reels, and products
+- Responsive UI for mobile and desktop
+
+### 2. Product Store
+
+- Product listing and detail flow
+- Product cards with images and quick interaction elements
+- Inventory-aware product data
+- Flexible product attributes such as size, weight, color, and measurement-based options (aligned with the project’s planned enhancements)
+- Cart and wishlist support
+- Checkout flow with payment integration
+
+### 3. Blog Platform
+
+- Customizable blog pages with title, subtitle, content sections, categories, and tags
+- Image-supported blog posts
+- Blog cards and content browsing experience
+- User interaction support including views, likes, and comments
+
+### 4. User Experience
+
+- Login and signup flows
+- User profile and account-related screens
+- Saved blogs and personal content views
+- Order and transaction tracking
+
+### 5. Payments and Transactions
+
+- Razorpay payment flow for checkout
+- Order verification endpoints
+- Transaction-oriented backend structure
+
+## Tech Stack
+
+| Layer            | Technologies                                                   |
+| ---------------- | -------------------------------------------------------------- |
+| Frontend         | Next.js 14, React 18, Tailwind CSS                             |
+| UI Enhancements  | Framer Motion, Heroicons, Lucide React, React Icons            |
+| State Management | Redux Toolkit, React Redux                                     |
+| Backend          | Next.js API Routes, Node.js                                    |
+| Database         | MongoDB with Mongoose                                          |
+| Authentication   | Auth flows and user session handling via Next.js app structure |
+| Payments         | Razorpay                                                       |
+| Forms            | Formik, Yup                                                    |
+| Utilities        | Axios, JWT, bcrypt, dotenv, js-cookie                          |
+
+## Project Structure
+
+```bash
+src/
+  app/
+    api/              # API routes for auth, blogs, products, users, transactions, and Razorpay
+    lib/              # MongoDB connection and Mongoose models
+    _components/      # Reusable UI components like cards, buttons, comments, checkout, etc.
+    _common/          # Shared header/footer/layout structure
+    homepage/         # Main landing page sections
+    blogs/            # Blog listing and blog detail pages
+    store/            # Product store pages
+    cart/             # Cart experience
+    checkout/         # Checkout UI
+    profile/          # User profile pages
+    wishlist/         # Saved products/blogs experience
+    add-product/      # Product creation UI
+    blogs/add-blog/   # Blog creation experience
+    paymentNode/      # Additional payment-related implementation assets
+```
+
+## Main Backend Models
+
+The app uses Mongoose models for:
+
+- Products
+- Blogs
+- Users
+- Transactions
+- Comments and ratings
+
+These models support content creation, product management, user-generated interaction, and transaction tracking.
+
+## Installation
+
+1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd paw-tales
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Create an environment file
+
+Create a file named `.env.local` in the project root and add the required values:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+RAZORPAY_TEST_KEY_ID=your_razorpay_key_id
+RAZORPAY_TEST_KEY_SECRET=your_razorpay_secret
+NEXT_PUBLIC_RAZORPAY_KEY_ID=your_public_razorpay_key
+```
+
+4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 to view the application.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+npm run dev      # Start the development server
+npm run build    # Create a production build
+npm run start    # Run the production build
+npm run lint     # Run the Next.js linter
+```
 
-## Learn More
+## API Highlights
 
-To learn more about Next.js, take a look at the following resources:
+The application includes API endpoints for:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Product creation and listing: `/api/products`
+- Blog creation and listing: `/api/blogs`
+- User-related operations: `/api/users`
+- Transaction handling: `/api/transactions`
+- Razorpay order creation: `/api/razorpay/order`
+- Razorpay signature verification: `/api/razorpay/verify`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Development Notes
 
-## Deploy on Vercel
+This project is structured to be expanded into a full production-ready pet commerce platform. Some of the most important enhancement areas already reflected in the codebase include:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- richer product variants and dynamic product listing options
+- more advanced blog customization and content management
+- improved admin-style workflows
+- stronger order and inventory management
+- deployment and production hardening
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Future Improvements
 
----
+Potential next steps for the project include:
 
-# PetVibe - Pet Care Website
-
-**PetVibe** is a modern pet care platform offering a blog section, an e-commerce store, and additional resources for pet owners.
-
-## Table of Contents
-
-1. [Project Overview](#project-overview)
-2. [Features](#features)
-3. [Technologies](#technologies)
-4. [Getting Started](#getting-started)
-5. [Usage](#usage)
-6. [API Endpoints](#api-endpoints)
-
----
-
-## Project Overview
-
-PetVibe is designed to provide pet owners with essential care tips, a blog for learning more about pet health, and a store to purchase pet-related products.
-
----
-
-## Features
-
-- **Home Page**: Introduction and key offerings of the website.
-- **Blog Section**: Read pet care tips, health advice, and stories.
-- **Store Section**: Buy food, toys, and other essentials for pets.
-- **Additional Pages**:
-  - About Us: Learn more about the website and its purpose.
-  - Contact: Get in touch with the team.
-
----
-
-## Technologies
-
-- **Frontend**: Next.js (React)
-- **Styling**: Tailwind CSS
-- **Backend**: Node.js (for API endpoints)
-- **Database**: MongoDB
-- **State Management**: Redux
-- **Icons**: HeroIcons
-
----
-
-## Getting Started
-
-To get started with the PetVibe project:
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/username/petvibe.git
-   ```
-
-2. Install the dependencies:
-
-   ```bash
-   cd petvibe
-   npm install
-   ```
-
-3. Run the development server:
-
-   ```bash
-   npm run dev
-   ```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## Usage
-
-- Navigate through the home, blog, and store sections.
-- Admin can add new blog posts or store products through the admin dashboard.
-
----
-
-## API Endpoints
-
-- `/api/blog` - Fetches blog articles.
-- `/api/store` - Fetches store products.
-- `/api/contact` - Handles contact form submissions.
-
----
+- Admin dashboard for product and blog management
+- Advanced search and category filters
+- Order status tracking and invoice generation
+- Better image upload and media handling
+- Deployment to Vercel or a cloud platform with a managed MongoDB instance
 
 ## License
 
-This project is licensed under the MIT License.
+This project does not currently declare a license file.
