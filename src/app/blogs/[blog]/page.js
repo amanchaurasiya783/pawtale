@@ -8,9 +8,8 @@ import { notFound } from "next/navigation";
 // Fetch Blog Details
 async function fetchBlogById(blogId) {
   try {
-    const response = await axios.get(
-      `http://localhost:3000/api/blogs/${blogId}`,
-    );
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    const response = await axios.get(`${baseUrl}/api/blogs/${blogId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching blog details:", error);

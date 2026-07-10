@@ -158,7 +158,11 @@ export default function WishlistComponent() {
             </thead>
             <tbody>
               {wishlistItems.map((item) => (
-                <tr key={item?._id} className="border-b">
+                <tr
+                  className="border-b cursor-pointer"
+                  key={item?._id}
+                  onClick={() => router.push(`/store/${item?._id}`)}
+                >
                   <td className="p-4 flex items-center gap-4">
                     <img
                       src={item?.images?.[0]}
@@ -177,13 +181,19 @@ export default function WishlistComponent() {
                   </td>
                   <td className="p-4 flex gap-4">
                     <ShoppingCartIcon
-                      onClick={() => handleAddToCart(item)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(item);
+                      }}
                       width={30}
                       height={30}
                       className="cursor-pointer hover:opacity-80"
                     />
                     <button
-                      onClick={() => handleRemoveFromWishlist(item?._id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemoveFromWishlist(item?._id);
+                      }}
                       className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                     >
                       Remove
@@ -209,7 +219,11 @@ export default function WishlistComponent() {
           </p>
         ) : (
           wishlistItems.map((item) => (
-            <div key={item?._id} className="bg-white p-4 rounded-lg shadow">
+            <div
+              key={item?._id}
+              className="bg-white p-4 rounded-lg shadow cursor-pointer"
+              onClick={`/store/${item?._id}`}
+            >
               <div className="flex items-start">
                 <div className="flex-grow">
                   <img
@@ -228,7 +242,19 @@ export default function WishlistComponent() {
                     {item?.quantity ? "Available" : "Out Of Stock"}
                   </p>
                   <button
-                    onClick={() => handleRemoveFromWishlist(item?.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToCart(item?._id);
+                    }}
+                    className="bg-red-500 text-white w-full py-2 rounded mt-3 hover:bg-red-600"
+                  >
+                    Add To Cart
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveFromWishlist(item?._id);
+                    }}
                     className="bg-red-500 text-white w-full py-2 rounded mt-3 hover:bg-red-600"
                   >
                     Remove

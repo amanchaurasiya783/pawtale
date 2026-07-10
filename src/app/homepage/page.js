@@ -12,7 +12,7 @@ const HomePage = () => {
       <Hero />
       <ShopByCategory />
       <PetCareBlog />
-      <ReelsSection />
+      {/* <ReelsSection /> */}
       <AboutUs />
     </div>
   );

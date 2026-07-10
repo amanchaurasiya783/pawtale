@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import Button from "@/app/_components/button.tsx";
 import CategoryCard from "../../_components/categorycard.tsx";
 import ProductCard from "../../_components/productcard";
+import Link from "next/link";
 
 const ShopByCategory = async () => {
   // Category Banners
@@ -56,14 +57,27 @@ const ShopByCategory = async () => {
           />
         ))}
       </div>
-      <div className="mx-auto my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-3 md:gap-5 gap-y-5">
+      {/* <div className="my-10 flex justify-center border border-blue-800">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 md:gap-5 gap-y-5">
+          {products?.map((product) => (
+            <ProductCard
+              key={product?._id}
+              id={product?._id}
+              imgPath={product?.images?.[0]}
+              ProductName={product?.name}
+            />
+          ))}
+        </div>
+      </div> */}
+      <div className="mx-auto my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-3 md:gap-5 gap-y-5 border border-blue-800">
         {products?.map((product) => (
-          <ProductCard
-            key={product?._id}
-            id={product?._id}
-            imgPath={product?.images?.[0]}
-            ProductName={product?.name}
-          />
+          <Link href={`/store/${product?._id}`} key={product?._id}>
+            <ProductCard
+              id={product?._id}
+              imgPath={product?.images?.[0]}
+              ProductName={product?.name}
+            />
+          </Link>
         ))}
       </div>
       <div className="text-center">
