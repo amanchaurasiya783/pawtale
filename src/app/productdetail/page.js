@@ -2,11 +2,12 @@ import ProductCard from "../_components/productcard";
 import AddToCartButton from "../_components/addtocartbutton";
 import StarIcon from "../_components/staricon";
 import ProductImages from "@/app/_components/productimages";
+import Link from "next/link";
 
 function ProductDetail({ product }) {
   const discount =
     product?.mrp && product?.price
-      ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
+      ? Math.round(((product?.mrp - product?.price) / product?.mrp) * 100)
       : 0;
 
   return (
@@ -50,42 +51,42 @@ function ProductDetail({ product }) {
               inclusive of all taxes
             </p>
             <p className="text-gray-700 mt-4 whitespace-pre-line">
-              {product.description}
+              {product?.description}
             </p>
             <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
               <p>
-                <span className="font-medium">Brand:</span> {product.brand}
+                <span className="font-medium">Brand:</span> {product?.brand}
               </p>
 
               <p>
-                <span className="font-medium">SKU:</span> {product.skuID}
+                <span className="font-medium">SKU:</span> {product?.skuID}
               </p>
 
               <p>
                 <span className="font-medium">Category:</span>{" "}
-                {product.category.join(", ")}
+                {product?.category.join(", ")}
               </p>
 
               <p>
-                <span className="font-medium">Stock:</span> {product.quantity} (
-                {product.stockStatus})
+                <span className="font-medium">Stock:</span> {product?.quantity}{" "}
+                ({product?.stockStatus})
               </p>
 
               <p>
                 <span className="font-medium">Warranty:</span>{" "}
-                {product.warranty}
+                {product?.warranty}
               </p>
 
               <p>
                 <span className="font-medium">Return:</span>{" "}
-                {product.returnDays} Days
+                {product?.returnDays} Days
               </p>
             </div>
           </div>
 
           {/* Highlights */}
           {/* <ul className="mt-2 list-disc list-inside text-sm text-gray-700 space-y-1">
-            {product.specifications.slice(0, 5).map((item) => (
+            {product?.specifications.slice(0, 5).map((item) => (
               <li key={item.key}>
                 {item.key}: {item.value}
               </li>
@@ -102,19 +103,19 @@ function ProductDetail({ product }) {
               <div className="flex odd:bg-gray-50 p-2 text-sm">
                 <div className="w-1/3 text-gray-600">Weight</div>
 
-                <div className="w-2/3">{product.weight} kg</div>
+                <div className="w-2/3">{product?.weight} kg</div>
               </div>
 
               <div className="flex even:bg-white p-2 text-sm">
                 <div className="w-1/3 text-gray-600">Dimensions</div>
 
                 <div className="w-2/3">
-                  {product.dimensions.length} × {product.dimensions.width} ×{" "}
-                  {product.dimensions.height}
+                  {product?.dimensions.length} × {product?.dimensions.width} ×{" "}
+                  {product?.dimensions.height}
                 </div>
               </div>
 
-              {product.specifications.map((item) => (
+              {product?.specifications.map((item) => (
                 <div
                   key={item.key}
                   className="flex odd:bg-gray-50 even:bg-white p-2 text-sm"

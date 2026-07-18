@@ -33,11 +33,11 @@ const AboutUs = () => {
               PetsZone was founded with a passion for pets and a commitment to
               providing high-quality pet care products and services. Our journey
               began with a mission to make the lives of pets and their owners
-              easier and happier. We've grown from a small local store to a
+              easier and happier. We have grown from a small local store to a
               trusted online resource for all things pet-related. At PetsZone,
               we believe in nurturing the bond between people and their pets,
               and we are constantly working to improve and expand our range of
-              products to meet our customers' needs.
+              products to meet our customer needs.
             </p>
 
             <div className="mt-8">

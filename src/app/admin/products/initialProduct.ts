@@ -44,4 +44,8 @@ export const initialProduct: ProductFormData = {
     isFeatured: false,
     isActive: true,
     isDeleted: false,
+
+    averageRating: 0,
+    numReviews: 0,
+    ratings: [],
 };
