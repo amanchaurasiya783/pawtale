@@ -1,49 +1,102 @@
 import type { ComponentType } from "react";
 import Image from "next/image";
-import StarIconImport from "./staricon";
 import HeartIcon from "./likedicon";
-
-type ProductCardProps = {
-    id: any;
-    imgPath?: string;
-    ProductName?: string;
-    LikeStatus?: boolean;
-};
+import StarIconImport from "./staricon";
 
 const StarIcon = StarIconImport as ComponentType<{ id: any }>;
 
-const ProductCard = ({ id, imgPath, ProductName, LikeStatus }: ProductCardProps) => {
+const ProductCard = ({
+    id,
+    imgPath,
+    ProductName,
+    price,
+    mrp,
+    rating,
+    reviews,
+    LikeStatus,
+}) => {
+    const discount = Math.round(((mrp - price) / mrp) * 100);
+
     return (
-        <div className="group relative shadow-lg p-2 flex flex-col gap-3 justify-center transition-all ease-in-out duration-300">
-            <div className="relative w-45 h-55 aspect-square overflow-hidden rounded-lg p-2">
-                <Image
-                    src={imgPath || "/Assets/hari_krishna.png"}
-                    alt="Category Images"
-                    width={300}
-                    height={500}
-                    layout="responsive"
-                    className="relative w-full h-full object-cover my-auto transition-transform duration-300 ease-in-out transform group-hover:scale-y-0"
-                />
-                <Image
-                    src={imgPath || "/Assets/hari_krishna.png"}
-                    alt="Category Images"
-                    width={300}
-                    height={500}
-                    layout="responsive"
-                    className="absolute inset-0 w-full h-full object-cover my-auto transition-transform duration-300 ease-in-out transform scale-y-0 group-hover:scale-y-100"
-                />
-            </div>
-            <div className="flex flex-col justify-end">
-                <div className="text-center">
-                    <StarIcon id={id} />
-                    <p className="text-center text-background font-medium">
-                        {ProductName || "Product Name"}
-                    </p>
-                    <div className="flex justify-end mt-1">
-                        <HeartIcon id={id} propliked={LikeStatus || true} />
-                    </div>
+        <div className="group overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+
+            {/* Image */}
+            <div className="relative overflow-hidden bg-gray-50">
+
+                {/* Discount Badge */}
+                <div className="absolute left-4 top-4 z-20 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white">
+                    {discount}% OFF
                 </div>
+
+                {/* Wishlist */}
+                <div className="absolute right-4 top-4 z-20 rounded-full bg-white p-2 shadow-lg">
+                    <HeartIcon
+                        id={id}
+                        propliked={LikeStatus}
+                    />
+                </div>
+
+                <div className="aspect-square overflow-hidden">
+                    <Image
+                        src={imgPath}
+                        alt={ProductName}
+                        width={500}
+                        height={500}
+                        className="h-full w-full object-contain p-2 transition duration-500 group-hover:scale-110"
+                        unoptimized
+                    />
+                </div>
+
             </div>
+
+            {/* Content */}
+
+            <div className="space-y-1 p-4">
+
+                {/* Rating */}
+
+                <div className="flex items-center gap-2">
+
+                    <StarIcon id={id} />
+
+                    <span className="text-sm text-gray-500">
+                        ({reviews || 1})
+                    </span>
+
+                </div>
+
+                {/* Name */}
+
+                <h3 className="line-clamp-2 truncate max-w-[280px] min-h-[5px] text-lg font-semibold text-background">
+                    {ProductName}
+                </h3>
+
+                {/* Price */}
+
+                <div className="flex items-end gap-2">
+
+                    <span className="text-2xl font-bold text-background">
+                        ₹{price}
+                    </span>
+
+                    <span className="text-sm text-gray-400 line-through">
+                        ₹{mrp}
+                    </span>
+
+                </div>
+
+                <p className="text-sm font-medium text-green-600">
+                    You save ₹{mrp - price}
+                </p>
+
+                {/* Button */}
+
+                <button className="mt-2 w-full rounded-xl bg-background py-2 text-sm font-semibold text-white transition hover:opacity-90">
+                    Add to Cart
+                </button>
+
+            </div>
+
         </div>
     );
 };

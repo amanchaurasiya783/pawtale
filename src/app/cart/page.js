@@ -10,8 +10,10 @@ import PaymentOptions from "../_components/paymentoptions";
 import Skeleton from "react-loading-skeleton";
 import Script from "next/script";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useRouter } from "next/navigation";
 
 export default function Cart() {
+  const router = useRouter();
   const [cartItems, setCartItems] = useState([]);
   const [user, setUser] = useState(null);
   const [finalOrderStatus, setFinalOrderStatus] = useState(false);
@@ -112,56 +114,94 @@ export default function Cart() {
   };
 
   // ✅ Razorpay Integration
-  const onPaymentSubmit = async () => {
+  const onPaymentSubmit = async (paymentMethod) => {
     try {
-      // 1️⃣ Create order on backend
-      const res = await fetch(`/api/razorpay/order`, {
+      // Cash on Delivery
+      if (paymentMethod === "cod") {
+        // TODO: Save COD order in DB
+
+        // alert("Order placed successfully!");
+
+        router.push("/orders/success");
+        return;
+      }
+
+      // Online Payment (Razorpay)
+      const res = await fetch("/api/razorpay/order", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           amount: totalAmount,
           address: formData,
           products: cartItems,
         }),
       });
+
       const order = await res.json();
 
-      // 2️⃣ Razorpay checkout options
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY_ID,
         amount: order.amount,
         currency: order.currency,
         order_id: order.id,
-        name: "PetCare Website",
+
+        name: "PetVibe",
         description: "Order Payment",
+
+        image: "/favicon.ico",
+
         handler: async function (response) {
-          // 3️⃣ Verify payment on backend
-          const verifyRes = await fetch(`/api/razorpay/verify`, {
+          const verifyRes = await fetch("/api/razorpay/verify", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(response),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...response,
+              address: formData,
+              products: cartItems,
+            }),
           });
+
           const verify = await verifyRes.json();
 
           if (verify.success) {
-            alert("✅ Payment Successful!");
-            // TODO: Redirect to success/thank-you page
+            // alert("Payment Successful!");
+
+            router.push("/orders/success");
           } else {
-            alert("❌ Payment Verification Failed");
+            alert("Payment Verification Failed");
           }
         },
+
         prefill: {
           name: formData.name,
           email: formData.email,
           contact: formData.contact,
         },
-        theme: { color: "#3399cc" },
+
+        notes: {
+          address: formData.address,
+        },
+
+        theme: {
+          color: "#0F3460", // Your brand blue
+        },
+
+        modal: {
+          ondismiss: function () {
+            console.log("Payment popup closed");
+          },
+        },
       };
 
       const rzp = new window.Razorpay(options);
       rzp.open();
-    } catch (error) {
-      console.error("Payment Error:", error);
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
     }
   };
 
@@ -178,60 +218,93 @@ export default function Cart() {
             <p className="text-center text-black">Your cart is empty.</p>
           ) : (
             cartItems.map((item) => (
-              <div key={item?._id} className="border-b pb-3 mb-3">
-                <div className="flex flex-col md:flex-row gap-4 items-center">
-                  <Link key={item?._id} href={`/store/${item?._id}`}>
-                    <div className="w-20 h-20 bg-gray-200 rounded overflow-auto">
+              <div
+                key={item._id}
+                className="mb-5 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition"
+              >
+                <div className="flex flex-col gap-5 md:flex-row">
+                  {/* Product Image */}
+                  <Link href={`/store/${item.products._id}`}>
+                    <div className="relative h-36 w-36 overflow-hidden rounded-xl border bg-gray-50">
                       <Image
-                        src={item?.products?.images?.[0]}
-                        alt="Product Image"
-                        width={100}
-                        height={100}
-                        className="object-cover"
+                        src={item.products.images?.[0]}
+                        alt={item.products.name}
+                        fill
+                        className="object-cover hover:scale-105 transition"
                       />
                     </div>
                   </Link>
-                  <div className="flex-grow">
-                    <h3 className="text-sm font-medium text-gray-900">
-                      {item?.products?.name}
-                    </h3>
-                    <p className="text-lg font-medium text-gray-800">
-                      ₹{item?.products?.price}
-                    </p>
-                  </div>
-                </div>
 
-                <div className="flex flex-col md:flex-row items-center justify-between mt-3 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => updateQuantity(item?._id, -1)}
-                      className="px-2 py-1 bg-gray-200 rounded"
-                    >
-                      -
-                    </button>
-                    <span className="font-semibold">{item?.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item?._id, 1)}
-                      className="px-2 py-1 bg-gray-200 rounded"
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() =>
-                        handleAddToWishlist(item?.products?._id, item?._id)
-                      }
-                      className="text-gray-600 flex items-center gap-1"
-                    >
-                      <FaHeart className="text-red-500" /> Save for later
-                    </button>
-                    <button
-                      onClick={() => removeItem(item?._id)}
-                      className="text-gray-600 flex items-center gap-1"
-                    >
-                      <FaTrash className="text-red-500" /> Remove
-                    </button>
+                  {/* Product Details */}
+                  <div className="flex flex-1 flex-col justify-between">
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        {item.products.name}
+                      </h3>
+
+                      <p className="mt-1 text-sm text-gray-500">
+                        Premium Quality Pet Product
+                      </p>
+
+                      <div className="mt-4 flex items-center gap-3">
+                        <span className="text-2xl font-bold text-blue-900">
+                          ₹{item.products.price}
+                        </span>
+
+                        <span className="text-gray-400 line-through">
+                          ₹{Math.round(item.products.price * 1.35)}
+                        </span>
+
+                        <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">
+                          25% OFF
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Bottom Row */}
+                    <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                      {/* Quantity */}
+                      <div className="flex w-fit items-center rounded-xl border bg-gray-50">
+                        <button
+                          onClick={() => updateQuantity(item._id, -1)}
+                          className="px-4 py-2 text-lg hover:bg-gray-100"
+                        >
+                          −
+                        </button>
+
+                        <span className="min-w-[45px] text-center font-semibold">
+                          {item.quantity}
+                        </span>
+
+                        <button
+                          onClick={() => updateQuantity(item._id, 1)}
+                          className="px-4 py-2 text-lg hover:bg-gray-100"
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() =>
+                            handleAddToWishlist(item.products._id, item._id)
+                          }
+                          className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium hover:bg-red-50"
+                        >
+                          <FaHeart className="text-red-500" />
+                          Wishlist
+                        </button>
+
+                        <button
+                          onClick={() => removeItem(item._id)}
+                          className="flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                        >
+                          <FaTrash />
+                          Remove
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -275,7 +348,10 @@ export default function Cart() {
           <h2 className="text-xl font-semibold mb-4 text-gray-800">
             Payment Details
           </h2>
-          <PaymentOptions onPaymentSubmit={onPaymentSubmit} />
+          <PaymentOptions
+            totalAmount={totalAmount}
+            onPaymentSubmit={onPaymentSubmit}
+          />
         </div>
       )}
     </div>

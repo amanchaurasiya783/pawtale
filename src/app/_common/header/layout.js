@@ -57,14 +57,14 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-background backdrop-blur-sm border-b border-border">
-      <div className="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
+      <div className="container mx-auto px-4 sm:px-6 py-1 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <span className="text-2xl font-bold text-foreground">PetVibe</span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-8">
+        <nav className="hidden lg:flex items-center space-x-14">
           <Link
             href="/"
             className={`transition-colors font-medium ${
@@ -114,7 +114,7 @@ const Header = () => {
             <div className="relative">
               <input
                 type="text"
-                className="w-40 md:w-56 px-4 py-2 rounded-full bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-200 text-background placeholder:text-muted-background"
+                className="w-40 md:w-56 px-4 py-1 rounded-full bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-200 text-background placeholder:text-muted-background"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => dispatch(setSearchTerm(e.target.value))}
@@ -174,7 +174,7 @@ const Header = () => {
             <button
               onClick={() =>
                 startTransition(() =>
-                  router.push(loginStatus ? "/profile" : "/login")
+                  router.push(loginStatus ? "/profile" : "/login"),
                 )
               }
               className={`p-2 rounded-full hover:bg-accent ${

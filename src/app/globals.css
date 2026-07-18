@@ -53,3 +53,21 @@ body {
 #test {
   border: 1px solid red;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.min-scrollbar::-webkit-scrollbar {
+  scrollbar-width: 1px;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

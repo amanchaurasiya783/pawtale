@@ -2,88 +2,169 @@ import connectToDatabase from "@/app/lib/mongodb";
 import { NextResponse } from "next/server";
 import Products from "@/app/lib/productModel";
 
-//add new product
-export async function POST(req, { params }) {
+// add new product
+export async function POST(req) {
   try {
-    const body = await req.json();
-    const createdBy = await req.headers.get("x-user-id");
-
-    const {
-      name,
-      description,
-      skuID,
-      price,
-      mrp,
-      discount,
-      images,
-      category,
-      quantity,
-    } = body;
-
-    // checking NULL for required values
-    if (
-      !name ||
-      !description ||
-      !skuID ||
-      !price ||
-      !mrp ||
-      !discount ||
-      !category ||
-      !quantity ||
-      !createdBy
-    )
-      return NextResponse.json(
-        { message: "Details Missing!" },
-        { status: 400 }
-      );
-
     await connectToDatabase();
 
-    //adding product to db
+    const body = await req.json();
+    const createdBy = req.headers.get("x-user-id");
+
+    if (!createdBy) {
+      return NextResponse.json(
+        { message: "Unauthorized", success: false },
+        { status: 401 },
+      );
+    }
+
     const product = await Products.create({
-      name,
-      description,
-      skuID,
-      price,
-      mrp,
-      discount,
-      images,
-      category,
-      quantity,
+      ...body,
       createdBy,
     });
+
     return NextResponse.json(
-      { message: "Product Added Successfully!", product },
-      { status: 200 }
+      {
+        message:
+          product.status === "draft"
+            ? "Draft saved successfully!"
+            : "Product added successfully!",
+        product,
+        success: true,
+      },
+      { status: 201 },
     );
   } catch (error) {
-    console.log("Error Fetching Products: ", error);
+    console.error("Error Adding Product:", error);
+
+    // Duplicate slug / SKU
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+
+      return NextResponse.json(
+        {
+          message: `${field} already exists.`,
+          success: false,
+        },
+        { status: 409 },
+      );
+    }
+
+    // Mongoose validation errors
+    if (error.name === "ValidationError") {
+      const errors = Object.values(error.errors).map((err) => err.message);
+
+      return NextResponse.json(
+        {
+          message: "Validation failed.",
+          success: false,
+          errors,
+        },
+        { status: 400 },
+      );
+    }
+
     return NextResponse.json(
-      { message: "Internal Server Error: ", error: error.message },
-      { status: 500 }
+      {
+        message: "Internal Server Error",
+        success: false,
+        error: error.message,
+      },
+      { status: 500 },
     );
   }
 }
 
-// Fetching All Products
-export async function GET(req, { params }) {
+// Fetch Products with Pagination
+export async function GET(req) {
   try {
     await connectToDatabase();
-    const products = await Products.find({});
-    if (!products || products.length === 0)
-      return NextResponse.json(
-        { message: "No Product Found!" },
-        { status: 204 }
-      );
+
+    const { searchParams } = new URL(req.url);
+
+    const page = Number(searchParams.get("page")) || 1;
+    const limit = Number(searchParams.get("limit")) || 12;
+    const search = searchParams.get("search") || "";
+    const sort = searchParams.get("sort") || "latest";
+
+    const skip = (page - 1) * limit;
+
+    const filter = {
+      isDeleted: false,
+      // status: "published",
+    };
+
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { category: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    let sortOption = {};
+
+    switch (sort) {
+      case "price-asc":
+        sortOption = { price: 1 };
+        break;
+
+      case "price-desc":
+        sortOption = { price: -1 };
+        break;
+
+      case "name-asc":
+        sortOption = { name: 1 };
+        break;
+
+      case "name-desc":
+        sortOption = { name: -1 };
+        break;
+
+      case "oldest":
+        sortOption = { createdAt: 1 };
+        break;
+
+      default:
+        sortOption = { createdAt: -1 };
+    }
+
+    const totalProducts = await Products.countDocuments(filter);
+
+    const products = await Products.find(filter)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit);
+
     return NextResponse.json(
-      { results: products.length, products },
-      { status: 200 }
+      {
+        products,
+        pagination: {
+          currentPage: page,
+          totalPages: Math.ceil(totalProducts / limit),
+          totalProducts,
+          limit,
+        },
+        message: "Products Found !",
+        success: true,
+      },
+      { status: 200 },
     );
   } catch (error) {
-    console.log("Error Fetching Products: ", error);
+    console.log(error);
+
     return NextResponse.json(
-      { message: "Internal Server Error: ", error: error.message },
-      { status: 500 }
+      {
+        message: "Internal Server Error",
+        success: false,
+        error: error.message,
+      },
+      { status: 500 },
     );
   }
 }
+
+// /api/products ? page = 1 & limit=12
+//   / api / products ? page = 2 & limit=12
+//   / api / products ? page = 3 & limit=12 & sort=price - asc
+//   / api / products ? page = 1 & limit=12 & sort=price - desc
+//   / api / products ? page = 1 & limit=12 & search=dog
+// /api/products?page=2&limit=12&search=cat&sort=name-asc

@@ -8,6 +8,7 @@ const fetchDetails = async (id) => {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
+
   if (!result.ok) {
     throw new Error("store details API failed");
   }

@@ -1,110 +1,190 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
-import Link from "next/link";
-import { verifyToken } from "@/app/utils/authenticate";
-
 export default function OrderPage({
     finalOrderStatus,
     setFinalOrderStatus,
     formData,
     setFormData,
 }) {
-    const router = useRouter();
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
         setFinalOrderStatus(false);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setFinalOrderStatus(true);
     };
 
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">Checkout</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
+            <div className="mb-8">
+                <p className="text-sm font-semibold uppercase tracking-widest text-blue-600">
+                    Shipping Details
+                </p>
+
+                <h2 className="mt-2 text-3xl font-bold text-background">
+                    Delivery Address
+                </h2>
+
+                <p className="mt-2 text-gray-500">
+                    Enter the address where you want your order delivered.
+                </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name + Email */}
+
+                <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            required
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="John Doe"
+                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            required
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="john@email.com"
+                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+                        />
+                    </div>
+                </div>
+
+                {/* Phone */}
+
+                <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                        Mobile Number
+                    </label>
+
                     <input
-                        type="text"
-                        name="name"
-                        placeholder="Full Name"
+                        type="tel"
+                        name="contact"
                         required
-                        className="border p-2 rounded w-full"
+                        value={formData.contact}
                         onChange={handleChange}
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email Address"
-                        required
-                        className="border p-2 rounded w-full"
-                        onChange={handleChange}
+                        pattern="[0-9]{10}"
+                        maxLength={10}
+                        placeholder="9876543210"
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
                     />
                 </div>
-                <input
-                    type="tel"
-                    name="contact"
-                    placeholder="Contact Number"
-                    required
-                    pattern="[0-9]{10}"
-                    maxLength={10}
-                    className="border p-2 rounded w-full"
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    name="address"
-                    placeholder="Full Address"
-                    required
-                    className="border p-2 rounded w-full"
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    name="landmark"
-                    placeholder="Landmark (Optional)"
-                    className="border p-2 rounded w-full"
-                    onChange={handleChange}
-                />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <input
-                        type="text"
-                        name="city"
-                        placeholder="City"
+
+                {/* Address */}
+
+                <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                        Full Address
+                    </label>
+
+                    <textarea
+                        rows={4}
+                        name="address"
                         required
-                        className="border p-2 rounded w-full"
+                        value={formData.address}
                         onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="state"
-                        placeholder="State"
-                        required
-                        className="border p-2 rounded w-full"
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="pincode"
-                        placeholder="Pin Code"
-                        required
-                        pattern="[0-9]{6}"
-                        maxLength={6}
-                        className="border p-2 rounded w-full"
-                        onChange={handleChange}
+                        placeholder="House No., Street, Area..."
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200 resize-none"
                     />
                 </div>
+
+                {/* Landmark */}
+
+                <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                        Landmark
+                    </label>
+
+                    <input
+                        type="text"
+                        name="landmark"
+                        value={formData.landmark}
+                        onChange={handleChange}
+                        placeholder="Near..."
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+                    />
+                </div>
+
+                {/* City State Pincode */}
+
+                <div className="grid gap-5 md:grid-cols-3">
+                    <div>
+                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                            City
+                        </label>
+
+                        <input
+                            type="text"
+                            name="city"
+                            required
+                            value={formData.city}
+                            onChange={handleChange}
+                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                            State
+                        </label>
+
+                        <input
+                            type="text"
+                            name="state"
+                            required
+                            value={formData.state}
+                            onChange={handleChange}
+                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                            Pincode
+                        </label>
+
+                        <input
+                            type="text"
+                            name="pincode"
+                            required
+                            value={formData.pincode}
+                            onChange={handleChange}
+                            pattern="[0-9]{6}"
+                            maxLength={6}
+                            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+                        />
+                    </div>
+                </div>
+
                 {!finalOrderStatus && (
                     <button
                         type="submit"
-                        className="bg-blue-500 text-white py-2 px-4 rounded w-full font-semibold hover:bg-blue-600 transition"
+                        className="mt-4 w-full rounded-xl bg-background py-4 text-lg font-semibold text-white transition hover:opacity-90"
                     >
-                        Place Order
+                        Continue to Payment →
                     </button>
                 )}
             </form>

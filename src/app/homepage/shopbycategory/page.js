@@ -1,12 +1,11 @@
 export const dynamic = "force-dynamic";
-// import Button from "../../_common/button/page";
+
 import Button from "@/app/_components/button.tsx";
 import CategoryCard from "../../_components/categorycard.tsx";
 import ProductCard from "../../_components/productcard";
 import Link from "next/link";
 
 const ShopByCategory = async () => {
-  // Category Banners
   const categoryBanners = [
     { name: "Dog", imgPath: "/Assets/dog1.png" },
     { name: "Cat", imgPath: "/Assets/catBanner.jpg" },
@@ -16,11 +15,11 @@ const ShopByCategory = async () => {
     { name: "Fishes", imgPath: "/Assets/fishBanner.jpg" },
   ];
 
-  // Fetch random products from API
   const fetchRandomProducts = async () => {
     try {
       const baseUrl =
         process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
       const product = await fetch(`${baseUrl}/api/products`, {
         cache: "no-store",
         method: "GET",
@@ -28,11 +27,12 @@ const ShopByCategory = async () => {
           "Content-Type": "application/json",
         },
       });
-      const products = await product?.json();
+
+      const products = await product.json();
 
       return products.products;
     } catch (error) {
-      console.log("Error Fetching Products: ", error);
+      console.log("Error Fetching Products:", error);
       return null;
     }
   };
@@ -40,50 +40,65 @@ const ShopByCategory = async () => {
   const products = await fetchRandomProducts();
 
   return (
-    <div className="mx-auto my-5 p-6">
-      <p className="text-md text-center font-medium text-background">
-        PET NUTRIENTS
-      </p>
-      <div className="text-3xl font-semibold text-center mt-3 mb-8 text-background">
-        Shop By Category
-      </div>
-      <div className="mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-3 md:gap-5 gap-y-5">
-        {categoryBanners.map((category) => (
-          <CategoryCard
-            key={category.name}
-            CategoryName={category.name}
-            imgPath={category.imgPath}
-            redirectPath={"/store"}
-          />
-        ))}
-      </div>
-      {/* <div className="my-10 flex justify-center border border-blue-800">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 md:gap-5 gap-y-5">
-          {products?.map((product) => (
-            <ProductCard
-              key={product?._id}
-              id={product?._id}
-              imgPath={product?.images?.[0]}
-              ProductName={product?.name}
+    <section className="bg-[#fafcff] py-16">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Heading */}
+        <div className="text-center">
+          <p className="text-sm font-semibold uppercase tracking-widest text-background">
+            Pet Nutrients
+          </p>
+
+          <h2 className="mt-3 text-3xl md:text-4xl font-semibold text-background">
+            Shop By Category
+          </h2>
+        </div>
+
+        {/* Categories */}
+        <div className="mt-12 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+          {categoryBanners.map((category) => (
+            <CategoryCard
+              key={category.name}
+              CategoryName={category.name}
+              imgPath={category.imgPath}
+              redirectPath="/store"
             />
           ))}
         </div>
-      </div> */}
-      <div className="mx-auto my-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-3 md:gap-5 gap-y-5 border border-blue-800">
-        {products?.map((product) => (
-          <Link href={`/store/${product?._id}`} key={product?._id}>
-            <ProductCard
-              id={product?._id}
-              imgPath={product?.images?.[0]}
-              ProductName={product?.name}
-            />
-          </Link>
-        ))}
+
+        {/* Featured Products */}
+        <div className="mt-20">
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-background">
+              Featured Collection
+            </p>
+
+            <h2 className="mt-3 text-3xl md:text-4xl font-semibold text-background">
+              Trending Products
+            </h2>
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+            {products?.map((product) => (
+              <Link href={`/store/${product?._id}`} key={product?._id}>
+                <ProductCard
+                  id={product?._id}
+                  imgPath={product?.images?.[0]}
+                  ProductName={product?.name}
+                  price={product?.price}
+                  mrp={product?.mrp}
+                  rating={product?.ratings}
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-14 flex justify-center">
+          <Button redirectPath="/store" value="View All Products" />
+        </div>
       </div>
-      <div className="text-center">
-        <Button redirectPath={"/store"} value={"View All"} />
-      </div>
-    </div>
+    </section>
   );
 };
 

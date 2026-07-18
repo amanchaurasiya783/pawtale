@@ -9,24 +9,36 @@ import HeroSection from "../_components/herosection";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 export const dynamic = "force-dynamic";
+import Pagination from "../_components/pagination";
 
 const Store = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [sortOption, setSortOption] = useState("default");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const searchTerm = useSelector((state) => state.blog.searchTerm);
   const products = useSelector((state) => state.product?.products);
 
   // Fetch all products
-  const fetchProducts = async () => {
+  const fetchProducts = async (page = 1) => {
+    setLoading(true);
+
     try {
-      const response = await fetch(`/api/products`);
-      if (!response.ok) throw new Error("Failed to fetch products.");
+      const response = await fetch(`/api/products?page=${page}&limit=12`);
+
       const result = await response.json();
-      dispatch(setProducts(result.products)); // Save products to redux store
-      setFilteredProducts(result.products); // Initialize filtered list
+      console.log("resulttttt : ", result);
+
+      dispatch(setProducts(result.products));
+
+      setFilteredProducts(result.products);
+
+      setCurrentPage(result.pagination.currentPage);
+
+      setTotalPages(result.pagination.totalPages);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -35,8 +47,8 @@ const Store = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    fetchProducts(currentPage);
+  }, [currentPage]);
 
   useEffect(() => {
     if (!searchTerm || !searchTerm.trim()) {
@@ -93,12 +105,12 @@ const Store = () => {
   return (
     <>
       <HeroSection title={"Store"} backgroundImage={"/Assets/hero1.webp"} />
-      <div className="my-5 px-2 mx-auto container">
-        <div className="flex gap-3 justify-center flex-col md:flex-row">
-          <div className="w-full md:w-1/4">
+      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-[280px_1fr]">
+          <div className="lg:sticky lg:top-24 h-fit rounded-2xl border bg-white p-5 shadow-sm">
             <FilterSection onFilter={handleFilter} />
           </div>
-          <div className="w-full mx-auto md:w-2/3">
+          <div className="space-y-6">
             <div className="p-3 w-full flex justify-between items-center">
               <p>
                 {loading ? (
@@ -119,20 +131,26 @@ const Store = () => {
                 <option value="name-desc">Name: Z-A</option>
               </select>
             </div>
-            <div className="grid gap-2 grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
               {error ? (
                 <p className="text-red-500">{error}</p>
               ) : loading ? (
                 Array(6)
                   .fill()
-                  .map((_, index) => <Skeleton key={index} height={250} />)
+                  .map((_, index) => (
+                    <Skeleton key={index} height={400} className="rounded-xl" />
+                  ))
               ) : filteredProducts.length > 0 ? (
                 filteredProducts.map((item, index) => (
                   <Link href={`/store/${item?._id}`} key={index}>
+                    {/* {console.log(item?.images?.[0])}; */}
                     <ProductCard
                       id={item?._id}
                       imgPath={item?.images?.[0]}
                       ProductName={item?.name}
+                      price={item?.price}
+                      mrp={item?.mrp}
+                      rating={item?.ratings}
                     />
                   </Link>
                 ))
@@ -140,6 +158,11 @@ const Store = () => {
                 <p>No Product Found!</p>
               )}
             </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
           </div>
         </div>
       </div>

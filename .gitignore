@@ -38,6 +38,7 @@ next-env.d.ts
 # custom files
 zmongo.txt
 task.txt
+jsonFormat.json
 
 # local env files
 src/app/config

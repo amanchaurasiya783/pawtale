@@ -1,150 +1,132 @@
 "use client";
+
 import { useState } from "react";
-
-type CardDetails = {
-    cardNumber: string;
-    expiryDate: string;
-    cvv: string;
-    cardHolder: string;
-};
-
-type Errors = {
-    paymentMethod?: string;
-    cardNumber?: string;
-    expiryDate?: string;
-    cvv?: string;
-    cardHolder?: string;
-};
+import { FaMoneyBillWave, FaCreditCard, FaLock } from "react-icons/fa";
 
 type PaymentOptionsProps = {
-    onPaymentSubmit: (paymentMethod: string, cardDetails: CardDetails) => void;
+    totalAmount?: number;
+    onPaymentSubmit: (paymentMethod: string) => void;
 };
 
-export default function PaymentOptions({ onPaymentSubmit }: PaymentOptionsProps) {
+export default function PaymentOptions({
+    totalAmount = 0,
+    onPaymentSubmit,
+}: PaymentOptionsProps) {
     const [paymentMethod, setPaymentMethod] = useState("");
-    const [cardDetails, setCardDetails] = useState({
-        cardNumber: "",
-        expiryDate: "",
-        cvv: "",
-        cardHolder: "",
-    });
-    const [errors, setErrors] = useState<Errors>({});
+    const [error, setError] = useState("");
 
-    const validate = () => {
-        const newErrors: Errors = {};
-        if (!paymentMethod) {
-            newErrors.paymentMethod = "Please select a payment method";
-        }
-        if (paymentMethod === "card") {
-            if (!/^[0-9]{16}$/.test(cardDetails.cardNumber)) {
-                newErrors.cardNumber = "Invalid card number (16 digits required)";
-            }
-            if (!/^(0[1-9]|1[0-2])\/[0-9]{2}$/.test(cardDetails.expiryDate)) {
-                newErrors.expiryDate = "Invalid expiry date (MM/YY format)";
-            }
-            if (!/^[0-9]{3,4}$/.test(cardDetails.cvv)) {
-                newErrors.cvv = "Invalid CVV (3-4 digits required)";
-            }
-            if (!cardDetails.cardHolder.trim()) {
-                newErrors.cardHolder = "Cardholder name is required";
-            }
-        }
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (validate()) {
-            onPaymentSubmit(paymentMethod, cardDetails);
+
+        if (!paymentMethod) {
+            setError("Please select a payment method");
+            return;
         }
+
+        setError("");
+        onPaymentSubmit(paymentMethod);
     };
 
     return (
-        <div className="bg-white p-4 my-2 shadow-lg rounded-lg max-w-4xl mx-auto">
-            <h2 className="text-xl font-semibold mb-4 text-gray-800">
-                Payment Options
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="block text-gray-700">Select Payment Method</label>
-                    <select
-                        className="border p-2 rounded w-full"
-                        value={paymentMethod}
+        <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
+            <div className="mb-8">
+                <p className="text-sm font-semibold uppercase tracking-widest text-blue-600">
+                    Payment
+                </p>
+
+                <h2 className="mt-2 text-3xl font-bold text-background">
+                    Choose Payment Method
+                </h2>
+
+                <p className="mt-2 text-gray-500">
+                    Your payment is secured with Razorpay.
+                </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+                <label
+                    className={`flex cursor-pointer items-center justify-between rounded-2xl border p-5 transition ${paymentMethod === "cod"
+                        ? "border-blue-600 bg-blue-50"
+                        : "border-gray-200 hover:border-blue-300"
+                        }`}
+                >
+                    <div className="flex items-center gap-4">
+                        <FaMoneyBillWave className="text-2xl text-green-600" />
+
+                        <div>
+                            <h3 className="font-semibold">Cash on Delivery</h3>
+                            <p className="text-sm text-gray-500">
+                                Pay when your order arrives.
+                            </p>
+                        </div>
+                    </div>
+
+                    <input
+                        type="radio"
+                        value="cod"
+                        checked={paymentMethod === "cod"}
                         onChange={(e) => setPaymentMethod(e.target.value)}
-                    >
-                        <option value="">Choose a payment method</option>
-                        <option value="cod">Cash on Delivery</option>
-                        <option value="card">Credit/Debit Card</option>
-                        <option value="upi">UPI</option>
-                        <option value="netbanking">Net Banking</option>
-                    </select>
-                    {errors.paymentMethod && (
-                        <p className="text-red-500 text-sm">{errors.paymentMethod}</p>
-                    )}
+                    />
+                </label>
+
+                <label
+                    className={`flex cursor-pointer items-center justify-between rounded-2xl border p-5 transition ${paymentMethod === "online"
+                        ? "border-blue-600 bg-blue-50"
+                        : "border-gray-200 hover:border-blue-300"
+                        }`}
+                >
+                    <div className="flex items-center gap-4">
+                        <FaCreditCard className="text-2xl text-blue-600" />
+
+                        <div>
+                            <h3 className="font-semibold">Online Payment</h3>
+                            <p className="text-sm text-gray-500">
+                                UPI • Cards • Wallets • Net Banking
+                            </p>
+                        </div>
+                    </div>
+
+                    <input
+                        type="radio"
+                        value="online"
+                        checked={paymentMethod === "online"}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                    />
+                </label>
+
+                {error && (
+                    <p className="text-sm font-medium text-red-500">{error}</p>
+                )}
+
+                <div className="rounded-2xl bg-gray-50 p-5">
+                    <div className="mb-2 flex justify-between">
+                        <span>Subtotal</span>
+                        <span>₹{totalAmount}</span>
+                    </div>
+
+                    <div className="mb-2 flex justify-between">
+                        <span>Delivery</span>
+                        <span className="text-green-600">FREE</span>
+                    </div>
+
+                    <div className="mt-4 flex justify-between border-t pt-4 text-lg font-bold">
+                        <span>Total</span>
+                        <span>₹{totalAmount}</span>
+                    </div>
                 </div>
 
-                {paymentMethod === "card" && (
-                    <div className="space-y-3">
-                        <input
-                            type="text"
-                            name="cardNumber"
-                            placeholder="Card Number"
-                            maxLength={16}
-                            className="border p-2 rounded w-full"
-                            onChange={(e) =>
-                                setCardDetails({ ...cardDetails, cardNumber: e.target.value })
-                            }
-                        />
-                        {errors.cardNumber && (
-                            <p className="text-red-500 text-sm">{errors.cardNumber}</p>
-                        )}
-
-                        <input
-                            type="text"
-                            name="expiryDate"
-                            placeholder="Expiry (MM/YY)"
-                            className="border p-2 rounded w-full"
-                            onChange={(e) =>
-                                setCardDetails({ ...cardDetails, expiryDate: e.target.value })
-                            }
-                        />
-                        {errors.expiryDate && (
-                            <p className="text-red-500 text-sm">{errors.expiryDate}</p>
-                        )}
-
-                        <input
-                            type="text"
-                            name="cvv"
-                            placeholder="CVV"
-                            maxLength={4}
-                            className="border p-2 rounded w-full"
-                            onChange={(e) =>
-                                setCardDetails({ ...cardDetails, cvv: e.target.value })
-                            }
-                        />
-                        {errors.cvv && <p className="text-red-500 text-sm">{errors.cvv}</p>}
-
-                        <input
-                            type="text"
-                            name="cardHolder"
-                            placeholder="Cardholder Name"
-                            className="border p-2 rounded w-full"
-                            onChange={(e) =>
-                                setCardDetails({ ...cardDetails, cardHolder: e.target.value })
-                            }
-                        />
-                        {errors.cardHolder && (
-                            <p className="text-red-500 text-sm">{errors.cardHolder}</p>
-                        )}
-                    </div>
-                )}
+                <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+                    <FaLock />
+                    <span>100% Secure Payment powered by Razorpay</span>
+                </div>
 
                 <button
                     type="submit"
-                    className="bg-blue-500 text-white py-2 px-4 rounded w-full font-semibold hover:bg-blue-600 transition"
+                    className="w-full rounded-xl bg-background py-4 text-lg font-semibold text-white transition hover:opacity-90"
                 >
-                    Confirm Payment
+                    {paymentMethod === "cod"
+                        ? "Place Order"
+                        : `Proceed to Pay ₹${totalAmount}`}
                 </button>
             </form>
         </div>

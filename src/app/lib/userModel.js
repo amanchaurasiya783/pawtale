@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["user", "beyonder", "admin"],
+    enum: ["user", "beyonder", "admin", "m1"],
     default: "user",
   },
   status: {
@@ -56,10 +56,8 @@ const userSchema = new mongoose.Schema({
   cart: [
     {
       products: {
-        // Changed from "products" to "product" for clarity
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Products", // Fixed typo "Prodcuts" → "Products"
-        // required: true,
+        ref: "Products",
       },
       quantity: {
         type: Number,
@@ -74,7 +72,6 @@ const userSchema = new mongoose.Schema({
     },
   ],
   createdAt: {
-    // Changed from "CreatedAt" to "createdAt" (camelCase)
     type: Date,
     default: Date.now,
   },

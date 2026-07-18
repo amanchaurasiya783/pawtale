@@ -3,7 +3,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="bg-background font-primary text-foreground">
-      <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
+      <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-7 sm:px-6 lg:space-y-16 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <Link href={"/"}>
@@ -11,8 +11,8 @@ const Footer = () => {
             </Link>
 
             <p className="mt-4 max-w-xs font-medium">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non
-              cupiditate quae nam molestias.
+              Your trusted destination for premium pet food, accessories,
+              grooming essentials, and healthcare products.
             </p>
 
             <ul className="mt-8 flex gap-6">
@@ -204,14 +204,25 @@ const Footer = () => {
                     Refund Policy
                   </Link>
                 </li>
+                <li>
+                  <Link href="#" className="transition hover:opacity-75">
+                    Privacy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="transition hover:opacity-75">
+                    Terms & Conditions
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="transition hover:opacity-75">
+                    Cookies
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
         </div>
-
-        <p className="text-xs">
-          &copy; 2022. Company Name. All rights reserved.
-        </p>
       </div>
     </footer>
   );
